@@ -2,6 +2,7 @@ package com.example.criminalintent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentManager;
 
 public class CrimeActivity extends AppCompatActivity {
 
@@ -9,5 +10,7 @@ public class CrimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime);
+
+        FragmentManager fragmentManager=getSupportFragmentManager();
     }
 }
