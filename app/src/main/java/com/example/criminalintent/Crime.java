@@ -10,6 +10,11 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
+    public Crime() {
+        mDate = new Date();
+        mId=UUID.randomUUID();
+    }
+
     public UUID getId() {
         return mId;
     }

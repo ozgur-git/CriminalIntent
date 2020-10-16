@@ -33,9 +33,8 @@ public class CrimeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_crime,container,false);
-        //TODO false dene
-//       View v=View.inflate(this,R.layout.fragment_crime,null);
+//        View v=inflater.inflate(R.layout.fragment_crime,container,false);
+       View v=View.inflate(getContext(),R.layout.fragment_crime,null);
         //TODO view dene
 
         mSolvedCheckbox=v.findViewById(R.id.crime_solved);
@@ -60,8 +59,7 @@ public class CrimeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mTitleField.setText(s);
-                //TODO s.toString() dene
+                mCrime.setTitle(s.toString());
 
             }
 
