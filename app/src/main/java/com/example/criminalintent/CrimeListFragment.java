@@ -74,6 +74,8 @@ public class CrimeListFragment extends Fragment {
 
         private List<Crime> mCrimes;
 
+
+
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
@@ -84,7 +86,11 @@ public class CrimeListFragment extends Fragment {
 
             LayoutInflater layoutInflater=LayoutInflater.from(getActivity());
 
-            return new CrimeHolder(layoutInflater,parent);
+            if (viewType==0) return new CrimeHolder(layoutInflater,parent);
+
+//            else return new CrimeHolder(layoutinflater,parent);
+
+
         }
 
         @Override
@@ -99,6 +105,13 @@ public class CrimeListFragment extends Fragment {
 
             return mCrimes.size();
         }
+
+        @Override
+        public int getItemViewType(int position) {
+//            return super.getItemViewType(position);
+            return (mCrimes.get(position).isRequiresPolice()?1:0);
+        }
+
 
     }
 }
