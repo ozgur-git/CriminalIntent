@@ -48,6 +48,10 @@ public class Crime {
         mDate = date;
     }
 
+    public void setRequiresPolice(boolean requiresPolice) {
+        mRequiresPolice = requiresPolice;
+    }
+
     public boolean isRequiresPolice() {
         return mRequiresPolice;
     }

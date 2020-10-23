@@ -40,7 +40,27 @@ public class CrimeListFragment extends Fragment {
        mRecyclerView.setAdapter(mAdapter);
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+
+
+
+//    private class MainHolder extends RecyclerView.ViewHolder{
+//
+//        public MainHolder(@NonNull View itemView) {
+//            super(itemView);
+//        }
+//    }
+
+
+    private abstract class MainHolder extends RecyclerView.ViewHolder {
+
+        public MainHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+        public abstract  void setCrime(Crime crime);
+    }
+
+    private class CrimeHolder extends MainHolder implements View.OnClickListener{
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -70,11 +90,40 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
+    private class CrimePoliceHolder extends MainHolder implements View.OnClickListener{
+
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+
+        private Crime mCrime;
+
+        public CrimePoliceHolder(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent) {
+
+            super(inflater.inflate(R.layout.list_item_crime_police,parent,false));
+
+            mTitleTextView=itemView.findViewById(R.id.crime_title);
+            mDateTextView=itemView.findViewById(R.id.crime_date);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        public void setCrime(Crime crime) {
+            mCrime = crime;
+            mDateTextView.setText(mCrime.getDate().toString());
+            mTitleTextView.setText(mCrime.getTitle());
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Toast.makeText(getActivity(),mCrime.getTitle()+ " clicked!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class CrimeAdapter extends RecyclerView.Adapter<MainHolder>{
 
         private List<Crime> mCrimes;
-
-
 
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
@@ -82,19 +131,17 @@ public class CrimeListFragment extends Fragment {
 
         @NonNull
         @Override
-        public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MainHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             LayoutInflater layoutInflater=LayoutInflater.from(getActivity());
 
             if (viewType==0) return new CrimeHolder(layoutInflater,parent);
 
-//            else return new CrimeHolder(layoutinflater,parent);
-
-
+            else return new CrimePoliceHolder(layoutInflater,parent);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull CrimeListFragment.CrimeHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MainHolder holder, int position) {
 
             Crime crime=mCrimes.get(position);
             holder.setCrime(crime);
