@@ -41,18 +41,6 @@ public class CrimeListFragment extends Fragment {
        mRecyclerView.setAdapter(mAdapter);
     }
 
-
-
-
-
-//    private class MainHolder extends RecyclerView.ViewHolder{
-//
-//        public MainHolder(@NonNull View itemView) {
-//            super(itemView);
-//        }
-//    }
-
-
     private abstract class MainHolder extends RecyclerView.ViewHolder {
 
         public MainHolder(@NonNull View itemView) {
@@ -94,36 +82,6 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private class CrimePoliceHolder extends MainHolder implements View.OnClickListener{
-
-        private TextView mTitleTextView;
-        private TextView mDateTextView;
-
-        private Crime mCrime;
-
-        public CrimePoliceHolder(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent) {
-
-            super(inflater.inflate(R.layout.list_item_crime_police,parent,false));
-
-            mTitleTextView=itemView.findViewById(R.id.crime_title);
-            mDateTextView=itemView.findViewById(R.id.crime_date);
-
-            itemView.setOnClickListener(this);
-
-        }
-
-        public void setCrime(Crime crime) {
-            mCrime = crime;
-            mDateTextView.setText(mCrime.getDate().toString());
-            mTitleTextView.setText(mCrime.getTitle());
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            Toast.makeText(getActivity(),mCrime.getTitle()+ " clicked!",Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private class CrimeAdapter extends RecyclerView.Adapter<MainHolder>{
 
