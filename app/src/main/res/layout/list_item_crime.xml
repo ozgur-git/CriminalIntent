@@ -12,24 +12,23 @@
               android:id="@+id/crime_title"
               android:text="Crime Title"
               app:layout_constraintTop_toTopOf="parent"
-              android:layout_marginTop="8dp"
-              app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-              app:layout_constraintEnd_toStartOf="@+id/imageView" android:layout_marginEnd="263dp"/>
+              android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
+              android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/imageView"
+              android:layout_marginEnd="8dp"/>
     <TextView android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/crime_date"
               android:text="Crime Date"
-              app:layout_constraintTop_toBottomOf="@+id/crime_title"
-              android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-              android:layout_marginStart="16dp"
-              app:layout_constraintEnd_toStartOf="@+id/imageView" android:layout_marginEnd="262dp"/>
+              android:layout_marginTop="8dp"
+              app:layout_constraintTop_toBottomOf="@+id/crime_title" app:layout_constraintStart_toStartOf="parent"
+              android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/imageView"
+              android:layout_marginEnd="8dp"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_solved"
             android:id="@+id/imageView" android:contentDescription="TODO"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
