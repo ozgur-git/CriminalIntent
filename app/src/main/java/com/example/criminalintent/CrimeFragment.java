@@ -15,11 +15,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.Date;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.example.criminalintent.CrimeListFragment.CRIME_ID;
 
 
 public class CrimeFragment extends Fragment {
+
+    Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -30,7 +35,10 @@ public class CrimeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        mCrime=new Crime();
-        mCrime=CrimeLab.getCrimeLab().getCrime(getActivity().getIntent().getParcelableExtra(CRIME_ID));
+        UUID crimeID=(UUID)getActivity().getIntent().getSerializableExtra(CRIME_ID);
+        mLogger.log(Level.INFO,"id is "+crimeID.toString());
+
+        mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
     }
 
     @Nullable
@@ -44,10 +52,13 @@ public class CrimeFragment extends Fragment {
         mDateButton=v.findViewById(R.id.crime_date);
         mTitleField=v.findViewById(R.id.crime_title);
 
-       mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> mCrime.setSolved(isChecked));
 
-        mDateButton.setText(mCrime.getDate().toString());
+        mTitleField.setText(mCrime.getTitle());
+        mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(false);
+        mSolvedCheckbox.setChecked(mCrime.isSolved());
+
+        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> mCrime.setSolved(isChecked));
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override

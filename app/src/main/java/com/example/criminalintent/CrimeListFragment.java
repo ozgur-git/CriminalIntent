@@ -21,7 +21,7 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
 
-    public static final String CRIME_ID="KEY_CRIME_ID";//public olmasi lazim
+    public static final String CRIME_ID="KEY_CRIME_ID";
 
     @Nullable
     @Override
@@ -73,7 +73,7 @@ public class CrimeListFragment extends Fragment {
 
         public void setCrime(Crime crime) {
             mCrime = crime;
-            mDateTextView.setText(mCrime.getDate().toString());
+            mDateTextView.setText(mCrime.getDate());
             mTitleTextView.setText(mCrime.getTitle());
             mImageSolveView.setVisibility(mCrime.isSolved()?View.VISIBLE:View.INVISIBLE);
         }

@@ -29,10 +29,19 @@ public class CrimeLab {
 
     public Crime getCrime(UUID uuid){
 
-        for(Crime w:mCrimes)
-            if (w.getId()==uuid) return w;
+        mLogger.log(Level.INFO,"uuid is "+uuid);
 
-        return null;
+
+
+        for(Crime w:mCrimes)
+            if (w.getId().equals(uuid)) {
+
+                mLogger.log(Level.INFO,"found crime title is "+w.getTitle());
+                return w;
+            }
+
+            return null;
+
 
     }
 
