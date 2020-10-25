@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Date;
 
+import static com.example.criminalintent.CrimeListFragment.CRIME_ID;
+
 
 public class CrimeFragment extends Fragment {
 
@@ -27,7 +29,8 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime=new Crime();
+//        mCrime=new Crime();
+        mCrime=CrimeLab.getCrimeLab().getCrime(getActivity().getIntent().getParcelableExtra(CRIME_ID));
     }
 
     @Nullable
@@ -41,12 +44,7 @@ public class CrimeFragment extends Fragment {
         mDateButton=v.findViewById(R.id.crime_date);
         mTitleField=v.findViewById(R.id.crime_title);
 
-       mSolvedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               mCrime.setSolved(isChecked);
-           }
-       });
+       mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> mCrime.setSolved(isChecked));
 
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setEnabled(false);

@@ -21,6 +21,8 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
 
+    public static final String CRIME_ID="KEY_CRIME_ID";//public olmasi lazim
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class CrimeListFragment extends Fragment {
 
 //            Toast.makeText(getActivity(),mCrime.getTitle()+ " clicked!",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(getActivity(),CrimeActivity.class);
+            intent.putExtra(CRIME_ID, mCrime.getId());
             startActivity(intent);
         }
     }
