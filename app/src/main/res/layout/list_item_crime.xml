@@ -14,7 +14,7 @@
               app:layout_constraintTop_toTopOf="parent"
               android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
               android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/imageView"
-              android:layout_marginEnd="8dp"/>
+              android:layout_marginEnd="8dp" android:textColor="@android:color/holo_purple" android:textSize="18sp"/>
     <TextView android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/crime_date"

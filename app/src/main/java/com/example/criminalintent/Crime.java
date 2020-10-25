@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,8 +41,12 @@ public class Crime {
         mSolved = solved;
     }
 
-    public Date getDate() {
-        return mDate;
+    public String getDate() {
+
+        SimpleDateFormat dateFormat=new SimpleDateFormat("E. MMM dd, YYYY");
+
+        return dateFormat.format(mDate);
+
     }
 
     public void setDate(Date date) {
