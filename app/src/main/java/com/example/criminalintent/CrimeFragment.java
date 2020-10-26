@@ -26,10 +26,23 @@ public class CrimeFragment extends Fragment {
 
     Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
+    private static final String CRIME_ID_KEY="crime_id";
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
+
+    public static CrimeFragment newInstance(UUID crimeID) {
+
+        Bundle args = new Bundle();
+
+        args.putSerializable(CRIME_ID_KEY,crimeID);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
