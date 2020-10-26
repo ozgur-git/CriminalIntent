@@ -49,7 +49,7 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 //        mCrime=new Crime();
 //        UUID crimeID=(UUID)getActivity().getIntent().getSerializableExtra(CRIME_ID);
-        UUID crimeID=(UUID) getArguments().get(CRIME_ID);
+        UUID crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
         mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
         mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
