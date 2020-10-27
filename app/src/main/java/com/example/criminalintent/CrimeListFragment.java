@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CrimeListFragment extends Fragment {
 
@@ -22,6 +23,7 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
 
     public static final String CRIME_ID="KEY_CRIME_ID";
+    Logger mLogger=Logger.getLogger(getClass().getName());
 
     @Nullable
     @Override
@@ -32,6 +34,8 @@ public class CrimeListFragment extends Fragment {
         mRecyclerView=view.findViewById(R.id.crime_recycler_view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mLogger.info("onCreateView is called!");
 
         updateUI();
 
@@ -95,6 +99,7 @@ public class CrimeListFragment extends Fragment {
 
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
+            mLogger.info("adapter cons is called!");
         }
 
         @NonNull
@@ -128,7 +133,14 @@ public class CrimeListFragment extends Fragment {
 //            return super.getItemViewType(position);
             return (mCrimes.get(position).isRequiresPolice()?1:0);
         }
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mLogger.info("onResume is called!");
+        mAdapter.notifyItemChanged();
+        mAdapter.notifyDataSetChanged();
+//        updateUI();
     }
 }

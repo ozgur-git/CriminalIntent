@@ -60,7 +60,6 @@ public class CrimeFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
 //        View v=inflater.inflate(R.layout.fragment_crime,container,false);
        View v=View.inflate(getContext(),R.layout.fragment_crime,null);
-        //TODO view dene
 
         mSolvedCheckbox=v.findViewById(R.id.crime_solved);
         mDateButton=v.findViewById(R.id.crime_date);
@@ -93,4 +92,5 @@ public class CrimeFragment extends Fragment {
         });
         return v;
     }
+
 }
