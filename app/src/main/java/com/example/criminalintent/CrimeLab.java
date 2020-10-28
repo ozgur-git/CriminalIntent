@@ -31,8 +31,6 @@ public class CrimeLab {
 
         mLogger.log(Level.INFO,"uuid is "+uuid);
 
-
-
         for(Crime w:mCrimes)
             if (w.getId().equals(uuid)) {
 

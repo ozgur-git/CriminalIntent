@@ -1,5 +1,7 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,31 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.*;
+
 import android.widget.EditText;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.example.criminalintent.CrimeListFragment.CRIME_ID;
 
 
 public class CrimeFragment extends Fragment {
 
     Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
-    private static final String CRIME_ID_KEY="crime_id";
+    public static final String CRIME_ID_KEY="crime_id";
 
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
+    private UUID crimeID;
 
     public static CrimeFragment newInstance(UUID crimeID) {
 
@@ -49,10 +49,16 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 //        mCrime=new Crime();
 //        UUID crimeID=(UUID)getActivity().getIntent().getSerializableExtra(CRIME_ID);
-        UUID crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
+        crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
         mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
         mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
+    }
+
+    void giveFeedback(){
+        Intent intent=new Intent(getActivity(),CrimeListActivity.class);
+        intent.putExtra(CRIME_ID_KEY,crimeID);
+        getActivity().setResult(Activity.RESULT_OK,intent);
     }
 
     @Nullable
@@ -69,9 +75,13 @@ public class CrimeFragment extends Fragment {
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(false);
+
         mSolvedCheckbox.setChecked(mCrime.isSolved());
 
-        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> mCrime.setSolved(isChecked));
+        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mCrime.setSolved(isChecked);
+            giveFeedback();
+        });
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override

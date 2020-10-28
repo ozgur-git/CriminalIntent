@@ -18,5 +18,9 @@ public class CrimeActivity extends SingleFragmentActivity{
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+    }
 }

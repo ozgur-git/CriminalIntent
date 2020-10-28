@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,14 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
+
+import static com.example.criminalintent.CrimeFragment.CRIME_ID_KEY;
 
 public class CrimeListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
+    private Integer crimeItemPosition;
 
     public static final String CRIME_ID="KEY_CRIME_ID";
+    public static final String CRIME_POSITION_KEY="KEY_CRIME_ID";
+
     Logger mLogger=Logger.getLogger(getClass().getName());
 
     @Nullable
@@ -35,6 +40,10 @@ public class CrimeListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        if (savedInstanceState!=null) {
+            crimeItemPosition = savedInstanceState.getInt(CRIME_POSITION_KEY);
+            mLogger.info("onCreateView is called "+crimeItemPosition);
+        }
         mLogger.info("onCreateView is called!");
 
         updateUI();
@@ -47,6 +56,14 @@ public class CrimeListFragment extends Fragment {
        mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
        mRecyclerView.setAdapter(mAdapter);
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        crimeID=(UUID)data.getSerializableExtra(CRIME_ID_KEY);
+//        CrimeLab.getCrimeLab().getCrime(crimeID).g
+//        mAdapter.notifyItemChanged(crimeListPosition);
+//    }
 
     private abstract class MainHolder extends RecyclerView.ViewHolder {
 
@@ -72,7 +89,6 @@ public class CrimeListFragment extends Fragment {
             mImageSolveView=itemView.findViewById(R.id.imageView);
 
             itemView.setOnClickListener(this);
-
         }
 
         public void setCrime(Crime crime) {
@@ -85,17 +101,19 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-//            Toast.makeText(getActivity(),mCrime.getTitle()+ " clicked!",Toast.LENGTH_SHORT).show();
+            mLogger.info("click position is "+getAbsoluteAdapterPosition());
+            crimeItemPosition=getAbsoluteAdapterPosition();
             Intent intent=new Intent(getActivity(),CrimeActivity.class);
             intent.putExtra(CRIME_ID, mCrime.getId());
             startActivity(intent);
+//            startActivityForResult(intent,1);
         }
     }
-
 
     private class CrimeAdapter extends RecyclerView.Adapter<MainHolder>{
 
         private List<Crime> mCrimes;
+        private int crimePosition;
 
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
@@ -133,14 +151,28 @@ public class CrimeListFragment extends Fragment {
 //            return super.getItemViewType(position);
             return (mCrimes.get(position).isRequiresPolice()?1:0);
         }
+
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mLogger.info("onResume is called!");
-        mAdapter.notifyItemChanged();
-        mAdapter.notifyDataSetChanged();
+        mLogger.info("onResume is called!"+crimeItemPosition);
+        if (crimeItemPosition!=null)
+            mAdapter.notifyItemChanged(crimeItemPosition);
+//        mAdapter.notifyDataSetChanged();
 //        updateUI();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mLogger.info("onSaveInstanceState is called! "+crimeItemPosition);
+        outState.putInt(CRIME_POSITION_KEY,crimeItemPosition);
+
     }
 }
