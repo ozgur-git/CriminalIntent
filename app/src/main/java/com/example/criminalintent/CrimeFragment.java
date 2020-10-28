@@ -47,18 +47,11 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mCrime=new Crime();
-//        UUID crimeID=(UUID)getActivity().getIntent().getSerializableExtra(CRIME_ID);
+
         crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
         mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
         mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
-    }
-
-    void giveFeedback(){
-        Intent intent=new Intent(getActivity(),CrimeListActivity.class);
-        intent.putExtra(CRIME_ID_KEY,crimeID);
-        getActivity().setResult(Activity.RESULT_OK,intent);
     }
 
     @Nullable
@@ -80,7 +73,6 @@ public class CrimeFragment extends Fragment {
 
         mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mCrime.setSolved(isChecked);
-            giveFeedback();
         });
 
         mTitleField.addTextChangedListener(new TextWatcher() {

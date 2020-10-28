@@ -57,14 +57,6 @@ public class CrimeListFragment extends Fragment {
        mRecyclerView.setAdapter(mAdapter);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        crimeID=(UUID)data.getSerializableExtra(CRIME_ID_KEY);
-//        CrimeLab.getCrimeLab().getCrime(crimeID).g
-//        mAdapter.notifyItemChanged(crimeListPosition);
-//    }
-
     private abstract class MainHolder extends RecyclerView.ViewHolder {
 
         public MainHolder(@NonNull View itemView) {
