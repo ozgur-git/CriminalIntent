@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
-
-import static com.example.criminalintent.CrimeFragment.CRIME_ID_KEY;
 
 public class CrimeListFragment extends Fragment {
 
