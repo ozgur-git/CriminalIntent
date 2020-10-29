@@ -5,5 +5,4 @@
         android:layout_height="match_parent"
         android:id="@+id/crime_view_pager">
 
-
 </androidx.viewpager.widget.ViewPager>
