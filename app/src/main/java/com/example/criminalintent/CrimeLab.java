@@ -27,21 +27,26 @@ public class CrimeLab {
         mLogger.log(Level.INFO,"size of crimes is "+mCrimes.size());
     }
 
-    public Crime getCrime(UUID uuid){
+    public Crime getCrime(int index){
 
-        mLogger.log(Level.INFO,"uuid is "+uuid);
-
-        for(Crime w:mCrimes)
-            if (w.getId().equals(uuid)) {
-
-                mLogger.log(Level.INFO,"found crime title is "+w.getTitle());
-                return w;
-            }
-
-            return null;
-
+        return mCrimes.get(index);
 
     }
+
+//    public Crime getCrime(UUID uuid){
+//
+//        mLogger.log(Level.INFO,"uuid is "+uuid);
+//
+//        for(Crime w:mCrimes)
+//            if (w.getId().equals(uuid)) {
+//
+//                mLogger.log(Level.INFO,"found crime title is "+w.getTitle());
+//                return w;
+//            }
+//
+//            return null;
+//
+//    }
 
     public static CrimeLab getCrimeLab(){
 

@@ -96,7 +96,8 @@ public class CrimeListFragment extends Fragment {
             mLogger.info("click position is "+getAbsoluteAdapterPosition());
             crimeItemPosition=getAbsoluteAdapterPosition();
             Intent intent=new Intent(getActivity(),CrimeActivity.class);
-            intent.putExtra(CRIME_ID, mCrime.getId());
+            intent.putExtra(CRIME_ID, crimeItemPosition);
+//            intent.putExtra(CRIME_ID, mCrime.getId());
             startActivity(intent);
 //            startActivityForResult(intent,1);
         }
