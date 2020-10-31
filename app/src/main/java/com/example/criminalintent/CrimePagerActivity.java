@@ -35,7 +35,6 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         mViewPager=findViewById(R.id.crime_view_pager);
 
-
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(),0) {
             @NonNull
             @Override
