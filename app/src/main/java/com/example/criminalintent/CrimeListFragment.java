@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,8 +96,8 @@ public class CrimeListFragment extends Fragment {
 //            Intent intent=new Intent(getActivity(),CrimeActivity.class);
 //            intent.putExtra(CRIME_ID, crimeItemPosition);
 //            intent.putExtra(CRIME_ID, mCrime.getId());
+//            startActivity(intent);
             startActivity(CrimePagerActivity.newIntent(getActivity(),crimeItemPosition));
-//            startActivityForResult(intent,1);
         }
     }
 
