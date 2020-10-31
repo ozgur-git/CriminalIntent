@@ -2,6 +2,8 @@ package com.example.criminalintent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ public class CrimePagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
+    private Button mFirstButton,mLastButton;
 
     private static final String EXTRA_CRIME_ID="crime_id";
 
@@ -30,10 +33,26 @@ public class CrimePagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
 
+        mFirstButton=findViewById(R.id.firstPage);
+        mLastButton=findViewById(R.id.lastPage);
+
 //        int crimeID=(int)getIntent().getIntExtra(EXTRA_CRIME_ID,0);
         mCrimes=CrimeLab.getCrimeLab().getCrimes();
 
         mViewPager=findViewById(R.id.crime_view_pager);
+
+        if (mViewPager.getCurrentItem()!=0) mFirstButton.setEnabled(true);
+        if (mViewPager.getCurrentItem()!=mCrimes.size()) mLastButton.setEnabled(true);
+
+        mFirstButton.setOnClickListener((v)->{
+            mViewPager.setCurrentItem(0);
+            v.setEnabled(false);
+        });
+
+        mLastButton.setOnClickListener((v)->{
+            mViewPager.setCurrentItem(mCrimes.size());
+            v.setEnabled(false);
+        });
 
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(),0) {
             @NonNull
