@@ -41,9 +41,6 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         mViewPager=findViewById(R.id.crime_view_pager);
 
-        if (mViewPager.getCurrentItem()!=0) mFirstButton.setEnabled(true);
-        if (mViewPager.getCurrentItem()!=mCrimes.size()) mLastButton.setEnabled(true);
-
         mFirstButton.setOnClickListener((v)->{
             mViewPager.setCurrentItem(0);
             v.setEnabled(false);
@@ -59,7 +56,16 @@ public class CrimePagerActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
 //                Crime crime=mCrimes.get(position);
+                if (position!=0) mFirstButton.setEnabled(true);
+
+                if (position!=mCrimes.size()) mLastButton.setEnabled(true);
+
                 return CrimeFragment.newInstance(position);
+            }
+
+            @Override
+            public int getItemPosition(@NonNull Object object) {
+                return super.getItemPosition(object);
             }
 
             @Override
