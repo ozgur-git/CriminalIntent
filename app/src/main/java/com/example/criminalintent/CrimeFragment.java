@@ -13,6 +13,7 @@ import android.widget.*;
 
 import android.widget.EditText;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class CrimeFragment extends Fragment {
     Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
     public static final String CRIME_ID_KEY="crime_id";
+    public static final String DIALOG_DATE="dialog_date";
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -71,7 +73,12 @@ public class CrimeFragment extends Fragment {
 
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
-        mDateButton.setEnabled(false);
+        mDateButton.setEnabled(true);
+        mDateButton.setOnClickListener((view)->{
+            DialogFragment dialogFragment=new DatePickerFragment();
+            dialogFragment.show(getFragmentManager(),DIALOG_DATE);
+
+        });
 
         mSolvedCheckbox.setChecked(mCrime.isSolved());
 
