@@ -2,16 +2,21 @@ package com.example.criminalintent;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Logger;
+
+import static com.example.criminalintent.CrimeFragment.REQUEST_DATE;
 
 public class DatePickerFragment extends DialogFragment {
 
@@ -59,7 +64,21 @@ public class DatePickerFragment extends DialogFragment {
                 .setTitle(R.string.date_picker_title)
 //                .setView(R.layout.dialog_date)
                 .setView(view)
-                .setPositiveButton(android.R.string.ok,null).create();
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDate=new GregorianCalendar(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth()).getTime();
+                        getTargetFragment().onActivityResult(REQUEST_DATE,1,);
+
+                    }
+                }).create();
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 }

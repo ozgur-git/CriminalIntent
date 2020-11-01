@@ -20,8 +20,10 @@ public class CrimeFragment extends Fragment {
 
     Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
-    public static final String CRIME_ID_KEY="crime_id";
-    public static final String DIALOG_DATE="dialog_date";
+    private static final String CRIME_ID_KEY="crime_id";
+    private static final String DIALOG_DATE="dialog_date";
+    public static final int REQUEST_DATE=0;
+
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -69,7 +71,9 @@ public class CrimeFragment extends Fragment {
         mDateButton.setEnabled(true);
         mDateButton.setOnClickListener((view)->{
 //            DialogFragment dialogFragment=new DatePickerFragment();
-            DatePickerFragment.newInstance(mCrime.getCrimeDate()).show(getFragmentManager(),DIALOG_DATE);
+            DatePickerFragment dialog=DatePickerFragment.newInstance(mCrime.getCrimeDate());
+            dialog.show(getFragmentManager(),DIALOG_DATE);
+            dialog.setTargetFragment(this,REQUEST_DATE);
 //            dialogFragment.show(getfragmentmanager(),dialog_date);
 
         });
