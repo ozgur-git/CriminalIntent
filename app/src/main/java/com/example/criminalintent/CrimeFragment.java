@@ -1,7 +1,5 @@
 package com.example.criminalintent;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,16 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.*;
-
+import android.widget.CheckBox;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -33,7 +27,6 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
-    private UUID crimeID;
     private int crimeIndex;
 
     public static CrimeFragment newInstance(int crimeIndex) {
@@ -75,16 +68,15 @@ public class CrimeFragment extends Fragment {
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
         mDateButton.setOnClickListener((view)->{
-            DialogFragment dialogFragment=new DatePickerFragment();
-            dialogFragment.show(getFragmentManager(),DIALOG_DATE);
+//            DialogFragment dialogFragment=new DatePickerFragment();
+            DatePickerFragment.newInstance(mCrime.getCrimeDate()).show(getFragmentManager(),DIALOG_DATE);
+//            dialogFragment.show(getfragmentmanager(),dialog_date);
 
         });
 
         mSolvedCheckbox.setChecked(mCrime.isSolved());
 
-        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mCrime.setSolved(isChecked);
-        });
+        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked)->mCrime.setSolved(isChecked));
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override

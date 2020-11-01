@@ -49,6 +49,11 @@ public class Crime {
 
     }
 
+    public Date getCrimeDate(){
+
+        return mDate;
+    }
+
     public void setDate(Date date) {
         mDate = date;
     }
