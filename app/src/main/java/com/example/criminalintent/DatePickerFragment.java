@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,7 +11,6 @@ import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -21,6 +21,8 @@ import static com.example.criminalintent.CrimeFragment.REQUEST_DATE;
 public class DatePickerFragment extends DialogFragment {
 
     static Logger mLogger=Logger.getLogger("DatePickerFragment");
+
+    public static final String DATE_EXTRA="date_extra";
 
     private static final String ARG_DATE="date";
 
@@ -68,17 +70,14 @@ public class DatePickerFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mDate=new GregorianCalendar(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth()).getTime();
-                        getTargetFragment().onActivityResult(REQUEST_DATE,1,);
+//                        Intent intent=new Intent(getActivity(),CrimePagerActivity.class);
+                        Intent intent=new Intent();
+                        intent.putExtra(DATE_EXTRA,mDate);
+                        getTargetFragment().onActivityResult(REQUEST_DATE, Activity.RESULT_OK,intent);
 
                     }
                 }).create();
 
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
 
 }
