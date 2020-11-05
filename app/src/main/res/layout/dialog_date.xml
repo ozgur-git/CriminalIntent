@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/ok_button"
             android:text="OK"
-            qqq
             >
     </Button>
 </LinearLayout>
