@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
@@ -29,6 +31,7 @@ public class DatePickerFragment extends DialogFragment {
     private static final String ARG_DATE="date";
 
     private Date mDate;
+    private Button mButton;
 
     public static DatePickerFragment newInstance(Date date){
 
@@ -48,16 +51,20 @@ public class DatePickerFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         mDate=(Date)getArguments().getSerializable(ARG_DATE);
 
         mLogger.info("oncreatedialog "+mDate);
 
         View view=getActivity().getLayoutInflater().inflate(R.layout.dialog_date,null);
 
+        mButton=view.findViewById(R.id.ok_button);
 //        DatePicker datePicker=(DatePicker)view;
         DatePicker datePicker=view.findViewById(R.id.dialog_date_picker);
 
-        datePicker.init(mDate.getYear(),mDate.getMonth(),mDate.getDay(),null);
+        Calendar calendar=Calendar.getInstance();
+
+        datePicker.init(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),null);
 
 //        View view=getActivity().getLayoutInflater().inflate(R.layout.dialog_date,null);
 //        View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date,null);
