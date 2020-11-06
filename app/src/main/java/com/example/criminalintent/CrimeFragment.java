@@ -75,10 +75,12 @@ public class CrimeFragment extends Fragment {
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
         mDateButton.setOnClickListener((view)->{
-//            DialogFragment dialogFragment=new DatePickerFragment();
-            DatePickerFragment dialog=DatePickerFragment.newInstance(mCrime.getCrimeDate());
-            dialog.show(getFragmentManager(),DIALOG_DATE);
-            dialog.setTargetFragment(this,REQUEST_DATE);
+
+            startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0);
+
+//            DatePickerFragment dialog=DatePickerFragment.newInstance(mCrime.getCrimeDate());
+  //          dialog.show(getFragmentManager(),DIALOG_DATE);
+    //        dialog.setTargetFragment(this,REQUEST_DATE);
 //            dialogFragment.show(getfragmentmanager(),dialog_date);
 
         });
