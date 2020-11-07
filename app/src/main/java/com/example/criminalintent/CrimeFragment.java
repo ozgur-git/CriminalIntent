@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import java.util.Date;
@@ -70,18 +69,16 @@ public class CrimeFragment extends Fragment {
         mDateButton=v.findViewById(R.id.crime_date);
         mTitleField=v.findViewById(R.id.crime_title);
 
-
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
         mDateButton.setOnClickListener((view)->{
 
-            startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0);
+        startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0);
 
 //            DatePickerFragment dialog=DatePickerFragment.newInstance(mCrime.getCrimeDate());
-  //          dialog.show(getFragmentManager(),DIALOG_DATE);
-    //        dialog.setTargetFragment(this,REQUEST_DATE);
-//            dialogFragment.show(getfragmentmanager(),dialog_date);
+//            dialog.show(getFragmentManager(),DIALOG_DATE);
+//            dialog.setTargetFragment(this,REQUEST_DATE);
 
         });
 

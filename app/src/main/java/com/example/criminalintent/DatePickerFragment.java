@@ -58,6 +58,8 @@ public class DatePickerFragment extends DialogFragment {
 
         View view=getActivity().getLayoutInflater().inflate(R.layout.dialog_date,null);
 
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         mButton=view.findViewById(R.id.ok_button);
 //        DatePicker datePicker=(DatePicker)view;
         DatePicker datePicker=view.findViewById(R.id.dialog_date_picker);
@@ -76,7 +78,9 @@ public class DatePickerFragment extends DialogFragment {
            mDate=new GregorianCalendar(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth()).getTime();
            Intent intent=new Intent();
            intent.putExtra(DATE_EXTRA,mDate);
-           getTargetFragment().onActivityResult(REQUEST_DATE, Activity.RESULT_OK,intent);
+           getActivity().setResult(Activity.RESULT_OK,intent);
+//           getTargetFragment().onActivityResult(REQUEST_DATE, Activity.RESULT_OK,intent);
+           getActivity().finish();
 
        });
         return view;

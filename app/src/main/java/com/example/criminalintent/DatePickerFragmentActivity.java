@@ -24,5 +24,6 @@ public class DatePickerFragmentActivity extends SingleFragmentActivity{
     protected Fragment createFragment() {
 
         return  DatePickerFragment.newInstance((Date)getIntent().getSerializableExtra(DATE_EXTRA));
+
     }
 }
