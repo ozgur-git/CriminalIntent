@@ -2,9 +2,7 @@ package com.example.criminalintent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -33,14 +31,16 @@ public class CrimeListFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_crime_list,container,false);
 
+        setHasOptionsMenu(true);
+
         mRecyclerView=view.findViewById(R.id.crime_recycler_view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if (savedInstanceState!=null) {
-            crimeItemPosition = savedInstanceState.getInt(CRIME_POSITION_KEY);
-            mLogger.info("onCreateView is called "+crimeItemPosition);
-        }
+//        if (savedInstanceState!=null) {
+//            crimeItemPosition = savedInstanceState.getInt(CRIME_POSITION_KEY);
+//            mLogger.info("onCreateView is called "+crimeItemPosition);
+//        }
         mLogger.info("onCreateView is called!");
 
         updateUI();
@@ -163,7 +163,13 @@ public class CrimeListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mLogger.info("onSaveInstanceState is called! "+crimeItemPosition);
-        outState.putInt(CRIME_POSITION_KEY,crimeItemPosition);
+//        outState.putInt(CRIME_POSITION_KEY,crimeItemPosition);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime_list,menu);
     }
 }

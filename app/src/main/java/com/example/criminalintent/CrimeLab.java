@@ -16,7 +16,7 @@ public class CrimeLab {
 
     private CrimeLab() {
         mCrimes = new ArrayList<>();
-        for(int i=0;i<100;i++)
+        for(int i=0;i<5;i++)
         {
             Crime crime=new Crime();
             crime.setTitle("Crime #"+(i+1));
@@ -57,5 +57,11 @@ public class CrimeLab {
 
     public List<Crime> getCrimes() {
         return mCrimes;
+    }
+
+    void addCrime(Crime crime){
+
+        mCrimes.add(crime);
+
     }
 }
