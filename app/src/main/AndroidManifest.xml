@@ -10,8 +10,10 @@
             android:supportsRtl="true"
             android:name=".GlobalVariables"
             android:theme="@style/AppTheme">
-        <activity android:name=".CrimePagerActivity">
-        </activity>
+        <activity
+                android:parentActivityName=".CrimeListActivity"
+                android:name=".CrimePagerActivity"/>
+
         <activity android:name=".CrimeActivity"/>
         <activity android:name=".DatePickerFragmentActivity"/>
         <activity

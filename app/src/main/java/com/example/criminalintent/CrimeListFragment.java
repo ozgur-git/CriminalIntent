@@ -188,13 +188,13 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case 1:
-                    mCrimeList.addCrime(mCrime);
-                    break;
+            case R.id.new_crime:
+                                 mCrimeList.addCrime(mCrime);
+                                 startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
+                                 return true;
             default:
-
+                                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 }
