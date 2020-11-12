@@ -20,7 +20,10 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,createFragment()).commit();
+        if  (savedInstanceState==null) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, createFragment()).commit();
+        }
 
     }
 }
