@@ -39,9 +39,8 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (savedInstanceState!=null) mSubtitleVisible=savedInstanceState.getBoolean(MENU_VISIBILITY_KEY);
 
-        mLogger.info("received visibility is "+mSubtitleVisible);
+
 
         GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
         mComponent=globalVariables.getComponent();
@@ -62,6 +61,17 @@ public class CrimeListFragment extends Fragment {
         updateUI();
 
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState!=null) mSubtitleVisible=savedInstanceState.getBoolean(MENU_VISIBILITY_KEY);
+        mLogger.info("received visibility is "+mSubtitleVisible);
+
+
+
     }
 
     private void updateUI(){
