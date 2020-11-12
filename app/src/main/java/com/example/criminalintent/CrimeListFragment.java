@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -112,6 +113,11 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+    private void updateSubtitle(){
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(getString(R.string.subtitle_format,mCrimeList.getCrimes().size()));
+    }
+
     private class CrimeAdapter extends RecyclerView.Adapter<MainHolder>{
 
         private List<Crime> mCrimes;
@@ -192,6 +198,8 @@ public class CrimeListFragment extends Fragment {
                                  mCrimeList.addCrime(mCrime);
                                  startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
                                  return true;
+            case R.id.show_subtitle:
+                                  updateSubtitle();
             default:
                                 return super.onOptionsItemSelected(item);
         }
