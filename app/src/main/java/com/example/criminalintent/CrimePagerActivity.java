@@ -39,8 +39,11 @@ public class CrimePagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+//        mComponent=(GlobalVariables).getApplicationContext().getComponent();
+        GlobalVariables globalVariables=(GlobalVariables)getApplicationContext();
+        mComponent=globalVariables.getComponent();
         mComponent.inject(this);
+//        mComponent.inject(this);
 
         setContentView(R.layout.activity_crime_pager);
 

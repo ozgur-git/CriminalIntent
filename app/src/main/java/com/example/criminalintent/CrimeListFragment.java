@@ -34,8 +34,11 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+        GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
+        mComponent=globalVariables.getComponent();
         mComponent.inject(this);
+//        mComponent.inject();
+
 
         View view=inflater.inflate(R.layout.fragment_crime_list,container,false);
 

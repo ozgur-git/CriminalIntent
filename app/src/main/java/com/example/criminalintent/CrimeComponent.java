@@ -4,13 +4,13 @@ import dagger.Component;
 
 import javax.inject.Singleton;
 
-@Singleton
 @Component(modules = CrimeModule.class)
+@Singleton
 public interface CrimeComponent {
 
     void inject(CrimeListFragment crimeListFragment);
     void inject(CrimePagerActivity crimePagerActivity);
     void inject(CrimeFragment crimeragment);
-
+//    void inject();
 
 }

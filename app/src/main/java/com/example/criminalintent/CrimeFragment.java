@@ -58,8 +58,14 @@ public class CrimeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+        GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
+        mComponent=globalVariables.getComponent();
         mComponent.inject(this);
+//        mComponent.inject();
+
+//        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+//        mComponent.inject(this);
+//        mComponent.inject();
 
         crimeIndex= (int)getArguments().get(CRIME_ID_KEY);
 //        crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
