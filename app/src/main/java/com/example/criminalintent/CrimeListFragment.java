@@ -45,10 +45,6 @@ public class CrimeListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        if (savedInstanceState!=null) {
-//            crimeItemPosition = savedInstanceState.getInt(CRIME_POSITION_KEY);
-//            mLogger.info("onCreateView is called "+crimeItemPosition);
-//        }
         mLogger.info("onCreateView is called!");
 
         updateUI();
