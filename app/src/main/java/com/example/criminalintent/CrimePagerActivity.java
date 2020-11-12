@@ -2,24 +2,22 @@ package com.example.criminalintent;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import javax.inject.Inject;
-import java.util.List;
 
 public class CrimePagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
     @Inject
-    List<Crime> mCrimes;
+    CrimeList mCrimes;
 
     CrimeComponent mComponent;
 
@@ -59,7 +57,7 @@ public class CrimePagerActivity extends AppCompatActivity {
         });
 
         mLastButton.setOnClickListener((v)->{
-            mViewPager.setCurrentItem(mCrimes.size());
+            mViewPager.setCurrentItem(mCrimes.getCrimes().size());
             v.setEnabled(false);
         });
 
@@ -70,7 +68,7 @@ public class CrimePagerActivity extends AppCompatActivity {
 //                Crime crime=mCrimes.get(position);
                 if (position!=0) mFirstButton.setEnabled(true);
 
-                if (position!=mCrimes.size()) mLastButton.setEnabled(true);
+                if (position!=mCrimes.getCrimes().size()) mLastButton.setEnabled(true);
 
                 return CrimeFragment.newInstance(position);
             }
@@ -82,11 +80,11 @@ public class CrimePagerActivity extends AppCompatActivity {
 
             @Override
             public int getCount() {
-                return mCrimes.size();
+                return mCrimes.getCrimes().size();
             }
         });
 
-        mViewPager.setCurrentItem((int)getIntent().getIntExtra(EXTRA_CRIME_ID,0));
+        mViewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_CRIME_ID,0));
 
     }
 }

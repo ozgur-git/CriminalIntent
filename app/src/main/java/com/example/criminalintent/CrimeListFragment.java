@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 public class CrimeListFragment extends Fragment {
 
     @Inject
-    List<Crime> mCrimeList;
+    CrimeList mCrimeList;
+    @Inject
+    Crime mCrime;
 
     CrimeComponent mComponent;
     private RecyclerView mRecyclerView;
@@ -57,7 +59,7 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI(){
 
-       mAdapter=new CrimeAdapter(mCrimeList);
+       mAdapter=new CrimeAdapter(mCrimeList.getCrimes());
 //        mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
 
        mRecyclerView.setAdapter(mAdapter);
@@ -180,5 +182,19 @@ public class CrimeListFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case 1:
+                    mCrimeList.addCrime(mCrime);
+                    break;
+            default:
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

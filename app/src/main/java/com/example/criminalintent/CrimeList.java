@@ -26,4 +26,9 @@ public class CrimeList {
     public List<Crime> getCrimes() {
         return mCrimes;
     }
+
+    public void addCrime(Crime crime){
+
+        mCrimes.add(crime);
+    }
 }

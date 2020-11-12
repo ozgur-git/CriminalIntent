@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static com.example.criminalintent.DatePickerFragment.DATE_EXTRA;
@@ -31,7 +30,7 @@ public class CrimeFragment extends Fragment {
     public static final int REQUEST_DATE=0;
 
     @Inject
-    List<Crime> mCrimeList;
+    CrimeList mCrimeList;
 
     private Crime mCrime;
 
@@ -72,7 +71,7 @@ public class CrimeFragment extends Fragment {
 //        mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
 //        mCrime=CrimeLab.getCrimeLab().getCrime(crimeIndex);
-        mCrime=mCrimeList.get(crimeIndex);
+        mCrime=mCrimeList.getCrimes().get(crimeIndex);
 
 //        mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
     }
