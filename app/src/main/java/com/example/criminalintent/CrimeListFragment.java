@@ -27,15 +27,21 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
     private Integer crimeItemPosition;
+    private boolean mSubtitleVisible;
 
     public static final String CRIME_ID="KEY_CRIME_ID";
     public static final String CRIME_POSITION_KEY="KEY_CRIME_ID";
+    public static final String MENU_VISIBILITY_KEY="KEY_VISIBILITY";
 
     Logger mLogger=Logger.getLogger(getClass().getName());
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if (savedInstanceState!=null) mSubtitleVisible=savedInstanceState.getBoolean(MENU_VISIBILITY_KEY);
+
+        mLogger.info("received visibility is "+mSubtitleVisible);
 
         GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
         mComponent=globalVariables.getComponent();
@@ -64,6 +70,8 @@ public class CrimeListFragment extends Fragment {
 //        mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
 
        mRecyclerView.setAdapter(mAdapter);
+
+       updateSubtitle();
     }
 
     private abstract class MainHolder extends RecyclerView.ViewHolder {
@@ -115,7 +123,15 @@ public class CrimeListFragment extends Fragment {
 
     private void updateSubtitle(){
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(getString(R.string.subtitle_format,mCrimeList.getCrimes().size()));
+        String subtitle=getString(R.string.subtitle_format,mCrimeList.getCrimes().size());
+
+        if (!mSubtitleVisible) {
+
+            subtitle = null;
+        }
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(subtitle);
+
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<MainHolder>{
@@ -179,7 +195,8 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mLogger.info("onSaveInstanceState is called! "+crimeItemPosition);
+        mLogger.info("onSaveInstanceState is called visibility "+mSubtitleVisible);
+        outState.putBoolean(MENU_VISIBILITY_KEY,mSubtitleVisible);
 //        outState.putInt(CRIME_POSITION_KEY,crimeItemPosition);
 
     }
@@ -188,6 +205,13 @@ public class CrimeListFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list,menu);
+
+        MenuItem subtitleItem=menu.findItem(R.id.show_subtitle);
+
+        if (mSubtitleVisible) subtitleItem.setTitle(R.string.hide_subtitle);
+
+        else subtitleItem.setTitle(R.string.show_subtitle);
+
     }
 
     @Override
@@ -199,9 +223,12 @@ public class CrimeListFragment extends Fragment {
                                  startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
                                  return true;
             case R.id.show_subtitle:
-                                  updateSubtitle();
+                                 mSubtitleVisible=!mSubtitleVisible;
+                                 getActivity().invalidateOptionsMenu();
+                                 updateSubtitle();
+                                 return true;
             default:
-                                return super.onOptionsItemSelected(item);
+                                 return super.onOptionsItemSelected(item);
         }
 
     }
