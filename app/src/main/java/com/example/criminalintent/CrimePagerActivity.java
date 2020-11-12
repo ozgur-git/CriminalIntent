@@ -48,8 +48,6 @@ public class CrimePagerActivity extends AppCompatActivity {
         mLastButton=findViewById(R.id.lastPage);
 
 //        int crimeID=(int)getIntent().getIntExtra(EXTRA_CRIME_ID,0);
-//        mCrimes=CrimeLab.getCrimeLab().getCrimes();//TODO injection
-
         mViewPager=findViewById(R.id.crime_view_pager);
 
         mFirstButton.setOnClickListener((v)->{
