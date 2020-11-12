@@ -14,7 +14,9 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import javax.inject.Inject;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.example.criminalintent.DatePickerFragment.DATE_EXTRA;
@@ -28,12 +30,17 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_DATE="dialog_date";
     public static final int REQUEST_DATE=0;
 
+    @Inject
+    List<Crime> mCrimeList;
 
     private Crime mCrime;
+
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
     private int crimeIndex;
+
+    CrimeComponent mComponent;
 
     public static CrimeFragment newInstance(int crimeIndex) {
 
@@ -51,11 +58,16 @@ public class CrimeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+        mComponent.inject(this);
+
         crimeIndex= (int)getArguments().get(CRIME_ID_KEY);
 //        crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
 //        mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
-        mCrime=CrimeLab.getCrimeLab().getCrime(crimeIndex);
+//        mCrime=CrimeLab.getCrimeLab().getCrime(crimeIndex);
+        mCrime=mCrimeList.get(crimeIndex);
+
 //        mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
     }
 

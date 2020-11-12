@@ -11,12 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class CrimePagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    private List<Crime> mCrimes;
+
+    @Inject
+    List<Crime> mCrimes;
+
+    CrimeComponent mComponent;
+
+//    private List<Crime> mCrimes;
     private Button mFirstButton,mLastButton;
 
     private static final String EXTRA_CRIME_ID="crime_id";
@@ -31,13 +38,17 @@ public class CrimePagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+        mComponent.inject(this);
+
         setContentView(R.layout.activity_crime_pager);
 
         mFirstButton=findViewById(R.id.firstPage);
         mLastButton=findViewById(R.id.lastPage);
 
 //        int crimeID=(int)getIntent().getIntExtra(EXTRA_CRIME_ID,0);
-        mCrimes=CrimeLab.getCrimeLab().getCrimes();
+//        mCrimes=CrimeLab.getCrimeLab().getCrimes();//TODO injection
 
         mViewPager=findViewById(R.id.crime_view_pager);
 

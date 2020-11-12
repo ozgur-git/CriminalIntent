@@ -11,11 +11,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class CrimeListFragment extends Fragment {
 
+    @Inject
+    List<Crime> mCrimeList;
+
+    CrimeComponent mComponent;
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
     private Integer crimeItemPosition;
@@ -28,6 +33,9 @@ public class CrimeListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+        mComponent.inject(this);
 
         View view=inflater.inflate(R.layout.fragment_crime_list,container,false);
 
@@ -50,7 +58,9 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI(){
 
-       mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
+       mAdapter=new CrimeAdapter(mCrimeList);
+//        mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
+
        mRecyclerView.setAdapter(mAdapter);
     }
 
