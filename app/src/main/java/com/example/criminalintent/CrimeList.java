@@ -1,10 +1,15 @@
 package com.example.criminalintent;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrimeList {
 
+    @Inject
+    Crime newCrime;
+
+    CrimeComponent mComponent;
     List<Crime> mCrimes = new ArrayList<>();
 
     static int count=0;
@@ -12,7 +17,10 @@ public class CrimeList {
     public CrimeList() {
 
         System.out.println("count is "+(++count));
-
+        GlobalVariables globalVariables=getApplicationContext();
+        mComponent=globalVariables.getComponent();
+        mComponent.inject(this);
+/
         for(int i=0;i<7;i++)
         {
             Crime crime=new Crime();

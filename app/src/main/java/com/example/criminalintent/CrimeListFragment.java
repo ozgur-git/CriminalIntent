@@ -39,9 +39,6 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-
-
         GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
         mComponent=globalVariables.getComponent();
         mComponent.inject(this);
