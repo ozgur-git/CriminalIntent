@@ -5,6 +5,8 @@ import android.content.Context;
 
 public class GlobalVariables extends Application {
 
+    static int count=0;
+
 //    Context mContext;
     CrimeComponent mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
 
@@ -12,6 +14,9 @@ public class GlobalVariables extends Application {
         return mComponent;
     }
 
+    public GlobalVariables() {
+        System.out.println("global variable class is called:"+(++count));
+    }
 //    @Override
 //    public void onCreate() {
 //        super.onCreate();
