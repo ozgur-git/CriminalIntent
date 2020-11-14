@@ -33,6 +33,11 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
 
+    public CrimePagerActivity() {
+
+        System.out.println("Crime pager activity is called");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
