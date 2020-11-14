@@ -1,13 +1,12 @@
 package com.example.criminalintent;
 
+import android.content.Context;
+
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrimeList {
-
-    @Inject
-    Crime newCrime;
 
     CrimeComponent mComponent;
     List<Crime> mCrimes = new ArrayList<>();
@@ -16,18 +15,15 @@ public class CrimeList {
 
     public CrimeList() {
 
-        System.out.println("count is "+(++count));
-        GlobalVariables globalVariables=getApplicationContext();
-        mComponent=globalVariables.getComponent();
-        mComponent.inject(this);
-/
+       System.out.println("count is "+(++count));
+
         for(int i=0;i<7;i++)
         {
-            Crime crime=new Crime();
-            crime.setTitle("Crime #"+(i+1));
-            crime.setRequiresPolice((1==(i%3)));
-            crime.setSolved(1==(i%2));
-            mCrimes.add(crime);
+            Crime newCrime=new Crime();
+            newCrime.setTitle("Crime #"+(i+1));
+            newCrime.setRequiresPolice((1==(i%3)));
+            newCrime.setSolved(1==(i%2));
+            mCrimes.add(newCrime);
         }
     }
 
@@ -35,8 +31,8 @@ public class CrimeList {
         return mCrimes;
     }
 
-    public void addCrime(Crime crime){
+    public void addCrime(){
 
-        mCrimes.add(crime);
+        mCrimes.add(new Crime());
     }
 }

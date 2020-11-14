@@ -20,8 +20,6 @@ public class CrimeListFragment extends Fragment {
 
     @Inject
     CrimeList mCrimeList;
-    @Inject
-    Crime mCrime;
 
     CrimeComponent mComponent;
     private RecyclerView mRecyclerView;
@@ -226,7 +224,7 @@ public class CrimeListFragment extends Fragment {
 
         switch (item.getItemId()){
             case R.id.new_crime:
-                                 mCrimeList.addCrime(mCrime);
+                                 mCrimeList.addCrime();
                                  startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
                                  return true;
             case R.id.show_subtitle:
