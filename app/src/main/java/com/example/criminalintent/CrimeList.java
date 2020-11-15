@@ -1,16 +1,9 @@
 package com.example.criminalintent;
 
-import android.content.Context;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrimeList {
-
-    @Inject
-    Provider<Crime> obj;
 
     List<Crime> mCrimes = new ArrayList<>();
 
@@ -23,8 +16,8 @@ public class CrimeList {
         for(int i=0;i<7;i++)
         {
 
-            Crime newCrime=obj.get();
-//            Crime newCrime=new Crime();
+//            Crime newCrime=obj.get();
+            Crime newCrime=new Crime();
             newCrime.setTitle("Crime #"+(i+1));
             newCrime.setRequiresPolice((1==(i%3)));
             newCrime.setSolved(1==(i%2));

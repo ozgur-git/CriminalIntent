@@ -21,7 +21,6 @@ public class CrimePagerActivity extends AppCompatActivity {
 
     CrimeComponent mComponent;
 
-//    private List<Crime> mCrimes;
     private Button mFirstButton,mLastButton;
 
     private static final String EXTRA_CRIME_ID="crime_id";
@@ -33,27 +32,18 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
 
-    public CrimePagerActivity() {
-
-        System.out.println("Crime pager activity is called");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        mComponent=(GlobalVariables).getApplicationContext().getComponent();
         GlobalVariables globalVariables=(GlobalVariables)getApplicationContext();
         mComponent=globalVariables.getComponent();
         mComponent.inject(this);
-//        mComponent.inject(this);
 
         setContentView(R.layout.activity_crime_pager);
 
         mFirstButton=findViewById(R.id.firstPage);
         mLastButton=findViewById(R.id.lastPage);
-
-//        int crimeID=(int)getIntent().getIntExtra(EXTRA_CRIME_ID,0);
         mViewPager=findViewById(R.id.crime_view_pager);
 
         mFirstButton.setOnClickListener((v)->{

@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +18,6 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import static com.example.criminalintent.DatePickerFragment.DATE_EXTRA;
-
 
 public class CrimeFragment extends Fragment {
 
@@ -46,7 +44,6 @@ public class CrimeFragment extends Fragment {
         Bundle args = new Bundle();
 
         args.putInt(CRIME_ID_KEY,crimeIndex);
-//        args.putSerializable(CRIME_ID_KEY,crimeIndex);
 
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
@@ -60,20 +57,10 @@ public class CrimeFragment extends Fragment {
         GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
         mComponent=globalVariables.getComponent();
         mComponent.inject(this);
-//        mComponent.inject();
-
-//        mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
-//        mComponent.inject(this);
-//        mComponent.inject();
-
         crimeIndex= (int)getArguments().get(CRIME_ID_KEY);
-//        crimeID=(UUID) getArguments().get(CRIME_ID_KEY);
-//        mLogger.log(Level.INFO,"id is "+crimeID.toString());
 
-//        mCrime=CrimeLab.getCrimeLab().getCrime(crimeIndex);
         mCrime=mCrimeList.getCrimes().get(crimeIndex);
 
-//        mCrime=CrimeLab.getCrimeLab().getCrime(crimeID);
     }
 
     @Nullable
@@ -81,6 +68,8 @@ public class CrimeFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
 //        View v=inflater.inflate(R.layout.fragment_crime,container,false);
        View v=View.inflate(getContext(),R.layout.fragment_crime,null);
+
+//       setHasOptionsMenu(true);
 
         mSolvedCheckbox=v.findViewById(R.id.crime_solved);
         mDateButton=v.findViewById(R.id.crime_date);
@@ -92,10 +81,6 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener((view)->{
 
         startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0);
-
-//            DatePickerFragment dialog=DatePickerFragment.newInstance(mCrime.getCrimeDate());
-//            dialog.show(getFragmentManager(),DIALOG_DATE);
-//            dialog.setTargetFragment(this,REQUEST_DATE);
 
         });
 
@@ -120,6 +105,7 @@ public class CrimeFragment extends Fragment {
 
             }
         });
+
         return v;
     }
 
@@ -132,4 +118,9 @@ public class CrimeFragment extends Fragment {
             mDateButton.setText(mCrime.getDate());
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+   }
 }
