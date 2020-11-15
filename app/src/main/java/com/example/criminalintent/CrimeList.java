@@ -3,13 +3,13 @@ package com.example.criminalintent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrimeList {
+class CrimeList {
 
     List<Crime> mCrimes = new ArrayList<>();
 
     static int count=0;
 
-    public CrimeList() {
+    CrimeList() {
 
        System.out.println("count is "+(++count));
 
@@ -24,12 +24,17 @@ public class CrimeList {
         }
     }
 
-    public List<Crime> getCrimes() {
+    List<Crime> getCrimes() {
         return mCrimes;
     }
 
-    public void addCrime(){
+    void addCrime(){
 
         mCrimes.add(new Crime());
+    }
+
+    void removeCrime(int index){
+
+        mCrimes.remove(index);
     }
 }

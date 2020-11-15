@@ -121,7 +121,22 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-//        menu.add(R.id.)
+        inflater.inflate(R.menu.fragment_crime,menu);
 
    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.delete_crime:
+                                    mCrimeList.removeCrime(crimeIndex);
+                                    getActivity().finish();
+//                                    return true;
+            default:
+                                    return super.onOptionsItemSelected(item);
+
+        }
+    }
 }
