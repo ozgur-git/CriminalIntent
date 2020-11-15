@@ -40,7 +40,6 @@ public class CrimeListFragment extends Fragment {
         GlobalVariables globalVariables=(GlobalVariables)getActivity().getApplicationContext();
         mComponent=globalVariables.getComponent();
         mComponent.inject(this);
-//        mComponent.inject();
 
 
         View view=inflater.inflate(R.layout.fragment_crime_list,container,false);

@@ -66,10 +66,9 @@ public class CrimeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
-//        View v=inflater.inflate(R.layout.fragment_crime,container,false);
        View v=View.inflate(getContext(),R.layout.fragment_crime,null);
 
-//       setHasOptionsMenu(true);
+       setHasOptionsMenu(true);
 
         mSolvedCheckbox=v.findViewById(R.id.crime_solved);
         mDateButton=v.findViewById(R.id.crime_date);
@@ -122,5 +121,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+//        menu.add(R.id.)
+
    }
 }
