@@ -13,15 +13,15 @@ class CrimeList {
 
        System.out.println("count is "+(++count));
 
-        for(int i=0;i<7;i++)
-        {
-
-            Crime newCrime=new Crime();
-            newCrime.setTitle("Crime #"+(i+1));
-            newCrime.setRequiresPolice((1==(i%3)));
-            newCrime.setSolved(1==(i%2));
-            mCrimes.add(newCrime);
-        }
+//        for(int i=0;i<7;i++)
+//        {
+//
+//            Crime newCrime=new Crime();
+//            newCrime.setTitle("Crime #"+(i+1));
+//            newCrime.setRequiresPolice((1==(i%3)));
+//            newCrime.setSolved(1==(i%2));
+//            mCrimes.add(newCrime);
+//        }
     }
 
     List<Crime> getCrimes() {

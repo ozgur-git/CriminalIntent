@@ -127,7 +127,10 @@ public class CrimeListFragment extends Fragment {
 
     private void updateSubtitle(){
 
-        String subtitle=getString(R.string.subtitle_format,mCrimeList.getCrimes().size());
+//        String subtitle=getString(R.string.subtitle_format,mCrimeList.getCrimes().size());
+        int crimeSize=mCrimeList.getCrimes().size();
+
+        String subtitle=getResources().getQuantityString(R.plurals.subtitle_plural,crimeSize,crimeSize);
 
         if (!mSubtitleVisible) {
 
@@ -208,6 +211,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.fragment_crime_list,menu);
 
         MenuItem subtitleItem=menu.findItem(R.id.show_subtitle);
