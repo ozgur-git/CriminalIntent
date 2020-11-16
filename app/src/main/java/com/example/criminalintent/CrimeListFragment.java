@@ -3,7 +3,9 @@ package com.example.criminalintent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,8 +43,21 @@ public class CrimeListFragment extends Fragment {
         mComponent=globalVariables.getComponent();
         mComponent.inject(this);
 
-
         View view=inflater.inflate(R.layout.fragment_crime_list,container,false);
+
+        LinearLayout placeholderLayout=view.findViewById(R.id.placeholder_layout);
+
+        if (mCrimeList.getCrimes().size()==0){
+
+            Button placeholderButton=view.findViewById(R.id.new_crime_button);
+
+            placeholderButton.setOnClickListener((v)->{
+                mCrimeList.addCrime();
+                startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
+            });
+        }
+
+        else  placeholderLayout.setVisibility(View.GONE);
 
         setHasOptionsMenu(true);
 
@@ -63,15 +78,11 @@ public class CrimeListFragment extends Fragment {
 
         if (savedInstanceState!=null) mSubtitleVisible=savedInstanceState.getBoolean(MENU_VISIBILITY_KEY);
         mLogger.info("received visibility is "+mSubtitleVisible);
-
-
-
     }
 
     private void updateUI(){
 
        mAdapter=new CrimeAdapter(mCrimeList.getCrimes());
-//        mAdapter=new CrimeAdapter(CrimeLab.getCrimeLab().getCrimes());
 
        mRecyclerView.setAdapter(mAdapter);
 
