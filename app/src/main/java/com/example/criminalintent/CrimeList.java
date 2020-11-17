@@ -21,7 +21,7 @@ class CrimeList {
 
        mContext=context;
 
-       mDatabase=new CrimeBaseHelper(mContext).getWritableDatabase();
+       mDatabase=new CrimeBaseHelper(context).getWritableDatabase();
 
        System.out.println("count is "+(++count));
 

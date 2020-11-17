@@ -7,8 +7,8 @@ public class GlobalVariables extends Application {
 
     static int count=0;
 
-//    Context mContext;
-    CrimeComponent mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule(getApplicationContext())).build();
+    Context mContext;
+    CrimeComponent mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule(mContext)).build();
 
     public CrimeComponent getComponent() {
         return mComponent;
@@ -17,10 +17,10 @@ public class GlobalVariables extends Application {
     public GlobalVariables() {
         System.out.println("global variable class is called:"+(++count));
     }
-//    @Override
-//    public void onCreate() {
-//        super.onCreate();
-//        mContext=getApplicationContext();
-//    }
+    @Override
+    public void onCreate() {
+      super.onCreate();
+      mContext=getApplicationContext();
+  }
 
 }
