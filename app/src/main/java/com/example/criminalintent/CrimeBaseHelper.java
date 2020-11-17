@@ -23,7 +23,7 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table "+ CrimeDbSchema.CrimeTable.NAME);
+        db.execSQL("create table "+ CrimeDbSchema.CrimeTable.NAME+" (field1)");
 
     }
 

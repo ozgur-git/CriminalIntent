@@ -19,6 +19,8 @@ class CrimeList {
 
        mCrimes = new ArrayList<>();
 
+       if (context==null) System.out.println("context is null");
+
        mContext=context;
 
        mDatabase=new CrimeBaseHelper(context).getWritableDatabase();
