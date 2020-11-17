@@ -1,15 +1,27 @@
 package com.example.criminalintent;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 class CrimeList {
 
-    List<Crime> mCrimes = new ArrayList<>();
+    List<Crime> mCrimes;
+
+    Context mContext;
+    private SQLiteDatabase mDatabase;
 
     static int count=0;
 
-    CrimeList() {
+    CrimeList(Context context) {
+
+       mCrimes = new ArrayList<>();
+
+       mContext=context;
+
+       mDatabase=new CrimeBaseHelper(mContext).getWritableDatabase();
 
        System.out.println("count is "+(++count));
 

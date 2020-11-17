@@ -9,13 +9,12 @@ import javax.inject.Singleton;
 @Module
 public class CrimeModule {
 
-//    Context context;
+   Context context;
+   public CrimeModule(Context context) {
+      this.context = context;
+  }
 
-//    public CrimeModule(Context context) {
-//        this.context = context;
-//    }
-//
-    @Provides
+   @Provides
     Crime provideCrime(){
 
         return new Crime();
@@ -25,7 +24,7 @@ public class CrimeModule {
     @Singleton
     CrimeList providesCrimeList(){
 
-        CrimeList mCrimes=new CrimeList();
+        CrimeList mCrimes=new CrimeList(context);
 
         return mCrimes;
     }

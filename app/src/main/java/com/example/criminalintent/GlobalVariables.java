@@ -8,7 +8,7 @@ public class GlobalVariables extends Application {
     static int count=0;
 
 //    Context mContext;
-    CrimeComponent mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule()).build();
+    CrimeComponent mComponent=DaggerCrimeComponent.builder().crimeModule(new CrimeModule(getApplicationContext())).build();
 
     public CrimeComponent getComponent() {
         return mComponent;
