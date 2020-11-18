@@ -1,10 +1,11 @@
-package com.example.criminalintent;
+package com.example.criminalintent.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
-import com.example.criminalintent.database.CrimeDbSchema;
+import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.*;
+import com.example.criminalintent.database.CrimeDbSchema.*;
 
 import java.util.logging.Logger;
 
@@ -17,14 +18,14 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
 
     public CrimeBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, version);
-        mLogger.info("CrimeBaseHelper is called");
+        mLogger.info("helper is called");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table "+ CrimeDbSchema.CrimeTable.NAME+" (field1)");
-
+        mLogger.info("helper oncreate is called");
+        db.execSQL("create table " + CrimeTable.NAME + " (" + Cols.UUID + "," + Cols.TITLE + "," + Cols.DATE + "," + Cols.SOLVED+")");
     }
 
     @Override
