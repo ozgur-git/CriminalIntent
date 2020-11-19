@@ -126,19 +126,15 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
 
             mLogger.info("click position is "+getAbsoluteAdapterPosition());
+
             crimeItemPosition=getAbsoluteAdapterPosition();
-//            CrimePagerActivity.newIntent(getActivity(),crimeItemPosition);
-//            Intent intent=new Intent(getActivity(),CrimeActivity.class);
-//            intent.putExtra(CRIME_ID, crimeItemPosition);
-//            intent.putExtra(CRIME_ID, mCrime.getId());
-//            startActivity(intent);
+
             startActivity(CrimePagerActivity.newIntent(getActivity(),crimeItemPosition));
         }
     }
 
     private void updateSubtitle(){
 
-//        String subtitle=getString(R.string.subtitle_format,mCrimeList.getCrimes().size());
         int crimeSize=mCrimeList.getCrimes().size();
 
         String subtitle=getResources().getQuantityString(R.plurals.subtitle_plural,crimeSize,crimeSize);
@@ -188,11 +184,10 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
 
-        @Override
-        public int getItemViewType(int position) {
-//            return super.getItemViewType(position);
-            return (mCrimes.get(position).isRequiresPolice()?1:0);
-        }
+       // @Override
+       // public int getItemViewType(int position) {
+       //     return (mCrimes.get(position).isRequiresPolice()?1:0);
+       // }
 
         @Override
         public long getItemId(int position) {
