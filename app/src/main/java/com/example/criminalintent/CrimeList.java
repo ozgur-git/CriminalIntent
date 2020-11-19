@@ -31,7 +31,7 @@ class CrimeList {
 
     List<Crime> getCrimes() {
 
-       Cursor cursor=mDatabase.query(true, CrimeTable.NAME,null,null,null,null,,null,null);
+//       Cursor cursor=mDatabase.query(true, CrimeTable.NAME,null,null,null,null,,null,null);
 
         return mCrimes;
     }
@@ -47,7 +47,13 @@ class CrimeList {
 
     void updateCrime(Crime crime){
 
-         mDatabase.execSQL("update "+CrimeTable.NAME+" set "+Cols.UUID+"="+crime.getId().toString()+" where ");
+         mDatabase.execSQL("update "+CrimeTable.NAME+
+                             " set "+Cols.UUID+"="+crime.getId().toString()+","+
+                             " set "+Cols.TITLE+"="+crime.getTitle()+","+
+                             " set "+Cols.DATE+"="+crime.getDate()+","+
+                             " set "+Cols.SOLVED+"="+crime.isSolved()+" where "+
+                             Cols.UUID+"="+crime.getId());
+
     }
 
     void removeCrime(int index){
