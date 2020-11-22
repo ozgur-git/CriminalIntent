@@ -34,14 +34,14 @@ class CrimeList {
 
     List<Crime> getCrimes() {
 
-       Cursor cursor=mDatabase.query(CrimeTable.NAME,null,null,null,null,null,null);
+//       Cursor cursor=mDatabase.query(CrimeTable.NAME,null,null,null,null,null,null);
+       Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
 
-//       Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
+//       Crime c=new Crime();
 
-       while (cursor.moveToNext()){
+        while (cursor.moveToNext()){
 
-        mLogger.info("database title is "+cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
-
+         mLogger.info("database title is "+cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
 
        }
 
@@ -51,23 +51,27 @@ class CrimeList {
     void addCrime(){
 
         Crime c=new Crime();
-        c.setTitle("dummy");
 
-        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"');");
+        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
 //        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values("+c.getId()+","+c.getTitle()+","+c.getDate()+","+c.isSolved()+")");
 //        mDatabase.insert(CrimeTable.NAME,null,getContentValues(new Crime()));
 
-        mCrimes.add(new Crime());
+        mCrimes.add(c);
     }
 
     void updateCrime(Crime crime){
 
-         mDatabase.execSQL("update "+CrimeTable.NAME+
-//                             " set "+Cols.UUID+"="+crime.getId()+","+
-                             " set "+Cols.TITLE+"="+crime.getTitle()+","+
-                             " set "+Cols.DATE+"="+crime.getDate()+","+
-                             " set "+Cols.SOLVED+"="+crime.isSolved()+" where "+
-                             Cols.UUID+"="+crime.getId());
+        String sql="update "+CrimeTable.NAME+
+//                             " set "+Cols.UUID+"='"+crime.getId()+"',"+
+                " set "+Cols.TITLE+"='"+crime.getTitle()+"', "
+                +Cols.DATE+"='"+crime.getDate()+"', "
+                +Cols.SOLVED+"='"+crime.isSolved()+"'"+
+                " where "+Cols.UUID+"='"+crime.getId()+"'";
+
+        mLogger.info("sql is "+sql);
+
+         mDatabase.execSQL(sql);
+
 
     }
 
