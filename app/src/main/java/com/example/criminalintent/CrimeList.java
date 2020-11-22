@@ -39,6 +39,8 @@ class CrimeList {
 //       Cursor cursor=mDatabase.query(CrimeTable.NAME,null,null,null,null,null,null);
        Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
 
+//       mCrimes=new ArrayList<>();
+
        while (cursor.moveToNext()){
 
            Crime c=new Crime();
@@ -51,7 +53,11 @@ class CrimeList {
 
            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
 
-           mCrimes.add(c);
+            if (!mCrimes.isEmpty()){
+
+                mCrimes.set(cursor.getPosition(),c);
+            }
+            else mCrimes.add(c);
 //todo hata array yer' degisecek
          mLogger.info("database title is "+cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
 
@@ -66,7 +72,7 @@ class CrimeList {
 
         mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
 
-//        mCrimes.add(c);
+        mCrimes.add(c);
     }
 
     void updateCrime(Crime crime){
