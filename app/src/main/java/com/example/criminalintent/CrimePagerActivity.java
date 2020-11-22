@@ -11,8 +11,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import javax.inject.Inject;
+import java.util.logging.Logger;
 
 public class CrimePagerActivity extends AppCompatActivity {
+
+    Logger mLogger= Logger.getLogger(getClass().getName());
 
     private ViewPager mViewPager;
 
@@ -27,6 +30,7 @@ public class CrimePagerActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context context,int crimeID){
 
+        System.out.println("inside static intent is "+crimeID);
         Intent intent=new Intent(context,CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID,crimeID);
         return intent;
@@ -79,6 +83,7 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
 
+        mLogger.info("crime pager actvivity intent is "+getIntent().getIntExtra(EXTRA_CRIME_ID,0));
         mViewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_CRIME_ID,0));
 
     }

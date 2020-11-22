@@ -53,7 +53,9 @@ public class CrimeListFragment extends Fragment {
 
             placeholderButton.setOnClickListener((v)->{
                 mCrimeList.addCrime();
-                startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
+                mLogger.info("size of the array is "+mCrimeList.getCrimes().size());
+                mLogger.info("size of the array issecond "+mCrimeList.getCrimes().size());
+                startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()));
             });
         }
 
@@ -123,7 +125,7 @@ public class CrimeListFragment extends Fragment {
         }
 
         @Override
-        public void onClick(View v) {
+            public void onClick(View v) {
 
             mLogger.info("click position is "+getAbsoluteAdapterPosition());
 

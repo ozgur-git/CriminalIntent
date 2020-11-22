@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class CrimeBaseHelper extends SQLiteOpenHelper {
 
-    public static final int version=9;
+    public static final int version=15;
     public static final String DATABASE_NAME="crimeBase.db";
 
     Logger mLogger=Logger.getLogger(getClass().getName());

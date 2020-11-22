@@ -10,7 +10,9 @@ import com.example.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 class CrimeList {
@@ -37,10 +39,20 @@ class CrimeList {
 //       Cursor cursor=mDatabase.query(CrimeTable.NAME,null,null,null,null,null,null);
        Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
 
-//       Crime c=new Crime();
+       while (cursor.moveToNext()){
 
-        while (cursor.moveToNext()){
+           Crime c=new Crime();
 
+           c.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+
+           c.setId(UUID.fromString(cursor.getString(cursor.getColumnIndex(Cols.UUID))));
+
+           c.setDate(new Date(cursor.getLong(cursor.getColumnIndex(Cols.DATE))));
+
+           c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
+
+           mCrimes.add(c);
+//todo hata array yer' degisecek
          mLogger.info("database title is "+cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
 
        }
@@ -53,10 +65,8 @@ class CrimeList {
         Crime c=new Crime();
 
         mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
-//        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values("+c.getId()+","+c.getTitle()+","+c.getDate()+","+c.isSolved()+")");
-//        mDatabase.insert(CrimeTable.NAME,null,getContentValues(new Crime()));
 
-        mCrimes.add(c);
+//        mCrimes.add(c);
     }
 
     void updateCrime(Crime crime){
@@ -71,7 +81,6 @@ class CrimeList {
         mLogger.info("sql is "+sql);
 
          mDatabase.execSQL(sql);
-
 
     }
 
