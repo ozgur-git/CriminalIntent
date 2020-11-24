@@ -131,7 +131,7 @@ public class CrimeFragment extends Fragment {
         switch (item.getItemId()){
 
             case R.id.delete_crime:
-                                    mCrimeList.removeCrime(crimeIndex);
+                                    mCrimeList.removeCrime(crimeIndex);//todo baska column gerekiyor
                                     getActivity().finish();
 //                                    return true;
             default:

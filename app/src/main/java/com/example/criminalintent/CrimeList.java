@@ -9,6 +9,7 @@ import com.example.criminalintent.database.CrimeDbSchema;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ class CrimeList {
 
     CrimeList(Context context) {
 
-       mCrimes = new ArrayList<>();
+//       mCrimes = new ArrayList<>();
 
        mDatabase=new CrimeBaseHelper(context).getWritableDatabase();
 
@@ -39,7 +40,7 @@ class CrimeList {
 //       Cursor cursor=mDatabase.query(CrimeTable.NAME,null,null,null,null,null,null);
        Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
 
-//       mCrimes=new ArrayList<>();
+       mCrimes=new ArrayList<>();
 
        while (cursor.moveToNext()){
 
@@ -53,11 +54,13 @@ class CrimeList {
 
            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
 
-            if (!mCrimes.isEmpty()){
+           mLogger.info("size of mCrimes is "+mCrimes.size());
 
-                mCrimes.set(cursor.getPosition(),c);
-            }
-            else mCrimes.add(c);
+//            if (!mCrimes.isEmpty()){
+//
+//                mCrimes.set(cursor.getPosition(),c);
+//            }
+             mCrimes.add(c);
 //todo hata array yer' degisecek
          mLogger.info("database title is "+cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
 
@@ -72,7 +75,7 @@ class CrimeList {
 
         mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
 
-        mCrimes.add(c);
+//        mCrimes.add(c);
     }
 
     void updateCrime(Crime crime){
@@ -92,7 +95,13 @@ class CrimeList {
 
     void removeCrime(int index){
 
-        mCrimes.remove(index);
+        String sql="delete from "+CrimeTable.NAME+" where rowid="+index;
+
+        mLogger.info("index is "+sql);
+
+        mDatabase.execSQL(sql);
+
+//        mCrimes.remove(index);
     }
 
     private static ContentValues getContentValues(Crime crime){
