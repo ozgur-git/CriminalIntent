@@ -81,9 +81,9 @@ class CrimeList {
 
     }
 
-    void removeCrime(int index){
+    void removeCrime(int index, UUID crimeID){
 
-        String sql="delete from "+CrimeTable.NAME+" where rowid="+index;
+        String sql="delete from "+CrimeTable.NAME+" where "+Cols.UUID+"='"+crimeID+"'";
 
         mLogger.info("index is "+sql);
 
