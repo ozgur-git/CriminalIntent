@@ -158,6 +158,7 @@ public class CrimeListFragment extends Fragment {
 
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
+
             mLogger.info("adapter cons is called!");
         }
 

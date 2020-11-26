@@ -77,11 +77,7 @@ public class CrimeFragment extends Fragment {
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
-        mDateButton.setOnClickListener((view)->{
-
-        startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0);
-
-        });
+        mDateButton.setOnClickListener((view)-> startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0));
 
         mSolvedCheckbox.setChecked(mCrime.isSolved());
 
@@ -146,4 +142,5 @@ public class CrimeFragment extends Fragment {
         mCrimeList.updateCrime(mCrime);
 
     }
+    
 }

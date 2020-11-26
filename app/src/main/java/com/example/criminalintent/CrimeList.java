@@ -1,15 +1,14 @@
 package com.example.criminalintent;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.criminalintent.database.CrimeBaseHelper;
-import com.example.criminalintent.database.CrimeDbSchema;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 
-import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +22,9 @@ class CrimeList {
     List<Crime> mCrimes;
 
 //    Context mContext;
-    private SQLiteDatabase mDatabase;
+    private final SQLiteDatabase mDatabase;
 
-    static int count=0;
+    SimpleDateFormat mSimpleDateFormat;
 
     CrimeList(Context context) {
 
@@ -34,6 +33,8 @@ class CrimeList {
         Cursor cursor=mDatabase.rawQuery("select * from "+CrimeTable.NAME,null);
 
         mCrimes=new ArrayList<>();
+
+        mSimpleDateFormat=new SimpleDateFormat("E. MMM dd, YYYY");
 
         while (cursor.moveToNext()) {
 
@@ -45,10 +46,25 @@ class CrimeList {
 
             c.setDate(new Date(cursor.getLong(cursor.getColumnIndex(Cols.DATE))));
 
-            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
+
+//            try {
+//                c.setDate(mSimpleDateFormat.parse(cursor.getString(cursor.getColumnIndex(Cols.DATE))));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+
+//            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
+            c.setSolved(cursor.getString(cursor.getColumnIndex(Cols.SOLVED)).equals("true"));
 
             mCrimes.add(c);
+
+            mLogger.info("mCrimes array size is"+mCrimes.size());
         }
+
+        for(Crime c:mCrimes)
+            mLogger.info("title is "+c.getTitle()+" and is solved is "+c.isSolved());
+
+        cursor.close();
 
    }
 
@@ -61,7 +77,7 @@ class CrimeList {
 
         Crime c=new Crime();
 
-        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
+        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getCrimeDate()+"','"+c.isSolved()+"')");
 
         mCrimes.add(c);
     }
@@ -92,16 +108,4 @@ class CrimeList {
         mCrimes.remove(index);
     }
 
-    private static ContentValues getContentValues(Crime crime){
-
-        ContentValues values=new ContentValues();
-
-//        values.put(Cols.UUID,crime.getId());
-        values.put(Cols.TITLE,crime.getTitle());
-        values.put(Cols.DATE,crime.getDate());
-        values.put(Cols.SOLVED,crime.isSolved());
-
-        return values;
-
-    }
 }
