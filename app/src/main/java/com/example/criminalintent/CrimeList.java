@@ -34,7 +34,7 @@ class CrimeList {
 
         mCrimes=new ArrayList<>();
 
-        mSimpleDateFormat=new SimpleDateFormat("E. MMM dd, YYYY");
+        mSimpleDateFormat=new SimpleDateFormat("EEE. MMM dd, yyy");
 
         while (cursor.moveToNext()) {
 
@@ -44,14 +44,17 @@ class CrimeList {
 
             c.setId(UUID.fromString(cursor.getString(cursor.getColumnIndex(Cols.UUID))));
 
-            c.setDate(new Date(cursor.getLong(cursor.getColumnIndex(Cols.DATE))));
+//            c.setDate(new Date(cursor.getLong(cursor.getColumnIndex(Cols.DATE))));
 
 
-//            try {
-//                c.setDate(mSimpleDateFormat.parse(cursor.getString(cursor.getColumnIndex(Cols.DATE))));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
+            try {
+
+                String dateString=cursor.getString(cursor.getColumnIndex(Cols.DATE));
+                mLogger.info("database read date is "+dateString);
+                c.setDate(mSimpleDateFormat.parse(dateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
 //            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
             c.setSolved(cursor.getString(cursor.getColumnIndex(Cols.SOLVED)).equals("true"));
@@ -77,7 +80,7 @@ class CrimeList {
 
         Crime c=new Crime();
 
-        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getCrimeDate()+"','"+c.isSolved()+"')");
+        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
 
         mCrimes.add(c);
     }

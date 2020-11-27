@@ -43,7 +43,7 @@ public class Crime {
 
     public String getDate() {
 
-        SimpleDateFormat dateFormat=new SimpleDateFormat("E. MMM dd, YYYY");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("E. MMM dd, yyyy");
 
         return dateFormat.format(mDate);
 
