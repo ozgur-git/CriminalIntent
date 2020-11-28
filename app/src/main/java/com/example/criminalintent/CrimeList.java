@@ -88,7 +88,7 @@ class CrimeList {
                 " set "+Cols.TITLE+"='"+crime.getTitle()+"', "
                 +Cols.DATE+"='"+crime.getDate()+"', "
                 +Cols.SOLVED+"='"+crime.isSolved()+"',"
-                +Cols.SUSPECT+"='"+crime.getSuspect()+" "+
+                +Cols.SUSPECT+"='"+crime.getSuspect()+"'"+
                 " where "+Cols.UUID+"='"+crime.getId()+"'";
 
         mLogger.info("sql is "+sql);

@@ -32,13 +32,15 @@ public class CrimeFragment extends Fragment {
     CrimeList mCrimeList;
 
     private Crime mCrime;
+    CrimeComponent mComponent;
 
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mReportButton;
     private CheckBox mSolvedCheckbox;
+
     private int crimeIndex;
 
-    CrimeComponent mComponent;
 
     public static CrimeFragment newInstance(int crimeIndex) {
 
@@ -74,6 +76,7 @@ public class CrimeFragment extends Fragment {
         mSolvedCheckbox=v.findViewById(R.id.crime_solved);
         mDateButton=v.findViewById(R.id.crime_date);
         mTitleField=v.findViewById(R.id.crime_title);
+        mReportButton=v.findViewById(R.id.crime_report);
 
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
@@ -100,6 +103,16 @@ public class CrimeFragment extends Fragment {
             public void afterTextChanged(Editable s) {
 
             }
+        });
+
+        mReportButton.setOnClickListener((view)->{
+
+            Intent intent=new Intent(Intent.ACTION_SEND);
+            intent.setType("text/olain");
+            intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
+            intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
+            startActivity(intent);
+
         });
 
         return v;
