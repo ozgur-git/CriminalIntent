@@ -10,7 +10,6 @@ import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -21,7 +20,6 @@ class CrimeList {
 
     List<Crime> mCrimes;
 
-//    Context mContext;
     private final SQLiteDatabase mDatabase;
 
     SimpleDateFormat mSimpleDateFormat;
@@ -44,8 +42,7 @@ class CrimeList {
 
             c.setId(UUID.fromString(cursor.getString(cursor.getColumnIndex(Cols.UUID))));
 
-//            c.setDate(new Date(cursor.getLong(cursor.getColumnIndex(Cols.DATE))));
-
+            c.setSuspect(cursor.getString(cursor.getColumnIndex(Cols.SUSPECT)));
 
             try {
 
@@ -56,7 +53,6 @@ class CrimeList {
                 e.printStackTrace();
             }
 
-//            c.setSolved(cursor.getInt(cursor.getColumnIndex(Cols.SOLVED)) != 0);
             c.setSolved(cursor.getString(cursor.getColumnIndex(Cols.SOLVED)).equals("true"));
 
             mCrimes.add(c);
@@ -80,7 +76,7 @@ class CrimeList {
 
         Crime c=new Crime();
 
-        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"')");
+        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"','"+c.getSuspect()+"')");
 
         mCrimes.add(c);
     }
@@ -91,7 +87,8 @@ class CrimeList {
 //                             " set "+Cols.UUID+"='"+crime.getId()+"',"+
                 " set "+Cols.TITLE+"='"+crime.getTitle()+"', "
                 +Cols.DATE+"='"+crime.getDate()+"', "
-                +Cols.SOLVED+"='"+crime.isSolved()+"'"+
+                +Cols.SOLVED+"='"+crime.isSolved()+"',"
+                +Cols.SUSPECT+"='"+crime.getSuspect()+" "+
                 " where "+Cols.UUID+"='"+crime.getId()+"'";
 
         mLogger.info("sql is "+sql);

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class CrimeBaseHelper extends SQLiteOpenHelper {
 
-    public static final int version=16;
+    public static final int version=17;
     public static final String DATABASE_NAME="crimeBase.db";
 
     Logger mLogger=Logger.getLogger(getClass().getName());
@@ -25,7 +25,7 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         mLogger.info("helper oncreate is called");
-        db.execSQL("create table " + CrimeTable.NAME + " (" +Cols.UUID+","+Cols.TITLE + "," + Cols.DATE + "," + Cols.SOLVED+");");
+        db.execSQL("create table " + CrimeTable.NAME + " (" +Cols.UUID+","+Cols.TITLE + "," + Cols.DATE + "," + Cols.SOLVED+","+Cols.SUSPECT+")");
 //        db.execSQL("create table " + CrimeTable.NAME + " (" + Cols.UUID + "," + Cols.TITLE + "," + Cols.DATE + "," + Cols.SOLVED+")");
     }
 
