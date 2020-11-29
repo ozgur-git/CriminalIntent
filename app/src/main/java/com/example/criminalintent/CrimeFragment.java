@@ -2,6 +2,7 @@ package com.example.criminalintent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,6 +93,9 @@ public class CrimeFragment extends Fragment {
 
         mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked)->mCrime.setSolved(isChecked));
 
+        PackageManager packageManager=getActivity().getPackageManager();
+
+
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,6 +118,7 @@ public class CrimeFragment extends Fragment {
 
             Intent intent=new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
+
             intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
             intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
             intent=Intent.createChooser(intent,getString(R.string.send_report));
@@ -122,6 +127,7 @@ public class CrimeFragment extends Fragment {
         });
 
         Intent pickContact=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+//        pickContact.addCategory(Intent.CATEGORY_HOME);
         mSuspectButton=v.findViewById(R.id.crime_suspect);
         mSuspectButton.setOnClickListener((view)-> startActivityForResult(pickContact,REQUEST_CONTACT));
 
@@ -129,6 +135,9 @@ public class CrimeFragment extends Fragment {
 
             mSuspectButton.setText(mCrime.getSuspect());
         }
+
+        if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null)
+            mSuspectButton.setEnabled(false);
 
         return v;
     }
