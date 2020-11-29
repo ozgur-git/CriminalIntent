@@ -2,7 +2,10 @@ package com.example.criminalintent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
@@ -27,6 +30,7 @@ public class CrimeFragment extends Fragment {
     private static final String CRIME_ID_KEY="crime_id";
     private static final String DIALOG_DATE="dialog_date";
     public static final int REQUEST_DATE=0;
+    private static final int REQUEST_CONTACT=1;
 
     @Inject
     CrimeList mCrimeList;
@@ -37,6 +41,7 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private Button mReportButton;
+    private Button mSuspectButton;
     private CheckBox mSolvedCheckbox;
 
     private int crimeIndex;
@@ -108,12 +113,22 @@ public class CrimeFragment extends Fragment {
         mReportButton.setOnClickListener((view)->{
 
             Intent intent=new Intent(Intent.ACTION_SEND);
-            intent.setType("text/olain");
+            intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
             intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
+            intent=Intent.createChooser(intent,getString(R.string.send_report));
             startActivity(intent);
 
         });
+
+        Intent pickContact=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        mSuspectButton=v.findViewById(R.id.crime_suspect);
+        mSuspectButton.setOnClickListener((view)-> startActivityForResult(pickContact,REQUEST_CONTACT));
+
+        if (mCrime.getSuspect() != null){
+
+            mSuspectButton.setText(mCrime.getSuspect());
+        }
 
         return v;
     }
@@ -125,6 +140,24 @@ public class CrimeFragment extends Fragment {
         if(requestCode==REQUEST_DATE&&resultCode== Activity.RESULT_OK) {
             mCrime.setDate((Date)data.getSerializableExtra(DATE_EXTRA));
             mDateButton.setText(mCrime.getDate());
+        }
+
+        else if (requestCode==REQUEST_CONTACT && data!=null){
+
+            Uri contactUri=data.getData();
+
+            String[] queryFields=new String[]{
+                    ContactsContract.Contacts.DISPLAY_NAME
+            };
+
+            Cursor cursor=getActivity().getContentResolver().query(contactUri,queryFields,null,null,null);
+
+            cursor.moveToFirst();
+
+            mCrime.setSuspect(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+
+            mSuspectButton.setText(mCrime.getSuspect());
+
         }
     }
 
