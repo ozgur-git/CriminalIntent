@@ -10,14 +10,14 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
-    private String mSuspect;
+    private Suspect mSuspect;
     private boolean mRequiresPolice;
 
-    public String getSuspect() {
+    public Suspect getSuspect() {
         return mSuspect;
     }
 
-    public void setSuspect(String suspect) {
+    public void setSuspect(Suspect suspect) {
         mSuspect = suspect;
     }
 

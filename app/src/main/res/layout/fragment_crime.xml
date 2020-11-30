@@ -35,5 +35,8 @@
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:id="@+id/crime_report" android:text="@string/crime_report_text"/>
 
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/call_suspect" android:text="@string/call_suspect_text"/>
+
 </LinearLayout>
 </FrameLayout>
