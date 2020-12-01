@@ -21,9 +21,9 @@ public class Crime {
         mSuspect = suspect;
     }
 
-
     public Crime() {
         mDate = new Date();
+        mSuspect=new Suspect();
         mId=UUID.randomUUID();
     }
 

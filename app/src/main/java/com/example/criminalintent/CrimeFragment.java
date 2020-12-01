@@ -153,12 +153,13 @@ public class CrimeFragment extends Fragment {
 
             Uri uri=ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
-            String columns=new String[]{ContactsContract.Contacts._ID,}
+            String[] columns={ContactsContract.CommonDataKinds.Phone.NUMBER};
 
+            String where=ContactsContract.Data.CONTACT_ID+"=?";
 
+            String[] selectionArgs={((Integer)mCrime.getSuspect().getSuspectContactsID()).toString()};//todo String.valueof
 
-
-            Cursor cursor=getActivity().getContentResolver().query(uri,);
+            Cursor cursor=getActivity().getContentResolver().query(uri,columns,where,selectionArgs,null);
 
 
 
@@ -189,7 +190,9 @@ public class CrimeFragment extends Fragment {
 
             cursor.moveToFirst();
 
-            mCrime.setSuspect(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+            mCrime.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+
+            mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID);
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
 
@@ -236,7 +239,7 @@ public class CrimeFragment extends Fragment {
 
         String dateString=dateFormat.format(mCrime.getCrimeDate());
 
-        String suspect=mCrime.getSuspect();
+        String suspect=mCrime.getSuspect().getSuspectName();
 
         if (suspect==null) {
 

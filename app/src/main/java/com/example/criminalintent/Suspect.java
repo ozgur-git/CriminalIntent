@@ -4,6 +4,7 @@ public class Suspect {
 
     private String suspectName;
     private int suspectPhoneNumber;
+    private int suspectContactsID;
 
     public String getSuspectName() {
         return suspectName;
@@ -19,5 +20,13 @@ public class Suspect {
 
     public void setSuspectPhoneNumber(int suspectPhoneNumber) {
         this.suspectPhoneNumber = suspectPhoneNumber;
+    }
+
+    public int getSuspectContactsID() {
+        return suspectContactsID;
+    }
+
+    public void setSuspectContactsID(int suspectContactsID) {
+        this.suspectContactsID = suspectContactsID;
     }
 }
