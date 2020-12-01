@@ -42,7 +42,7 @@ class CrimeList {
 
             c.setId(UUID.fromString(cursor.getString(cursor.getColumnIndex(Cols.UUID))));
 
-            c.setSuspect(cursor.getString(cursor.getColumnIndex(Cols.SUSPECT)));
+            c.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(Cols.SUSPECT)));
 
             try {
 

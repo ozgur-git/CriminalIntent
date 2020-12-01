@@ -148,7 +148,7 @@ public class CrimeFragment extends Fragment {
         if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null)
             mSuspectButton.setEnabled(false);
 
-        mCallSuspectButton.findViewById(R.id.call_suspect);
+        mCallSuspectButton=v.findViewById(R.id.call_suspect);
         mCallSuspectButton.setOnClickListener((view)->{
 
             Uri uri=ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -160,6 +160,10 @@ public class CrimeFragment extends Fragment {
             String[] selectionArgs={((Integer)mCrime.getSuspect().getSuspectContactsID()).toString()};//todo String.valueof
 
             Cursor cursor=getActivity().getContentResolver().query(uri,columns,where,selectionArgs,null);
+
+            cursor.moveToFirst();
+
+            mLogger.info("ohone number of the suspect is "+cursor.getString(0));
 
 
 
@@ -192,7 +196,7 @@ public class CrimeFragment extends Fragment {
 
             mCrime.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
-            mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID);
+            mCrime.getSuspect().setSuspectContactsID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))));
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
 
