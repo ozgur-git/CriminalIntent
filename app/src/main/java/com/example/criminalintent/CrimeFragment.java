@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,7 +16,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
@@ -73,6 +76,8 @@ public class CrimeFragment extends Fragment {
         crimeIndex= (int)getArguments().get(CRIME_ID_KEY);
 
         mCrime=mCrimeList.getCrimes().get(crimeIndex);
+
+
 
     }
 
@@ -150,23 +155,26 @@ public class CrimeFragment extends Fragment {
 
         mCallSuspectButton=v.findViewById(R.id.call_suspect);
         mCallSuspectButton.setOnClickListener((view)->{
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_CONTACTS},1);
+            }
 
-            Uri uri=ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+            else {
+                Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
-            String[] columns={ContactsContract.CommonDataKinds.Phone.NUMBER};
+                String[] columns = {ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-            String where=ContactsContract.Data.CONTACT_ID+"=?";
+                String where = ContactsContract.Data.CONTACT_ID + "=?";
 
-            String[] selectionArgs={((Integer)mCrime.getSuspect().getSuspectContactsID()).toString()};//todo String.valueof
+                String[] selectionArgs = {((Integer) mCrime.getSuspect().getSuspectContactsID()).toString()};//todo String.valueof
 
-            Cursor cursor=getActivity().getContentResolver().query(uri,columns,where,selectionArgs,null);
+                Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
 
-            cursor.moveToFirst();
+                cursor.moveToFirst();
 
-            mLogger.info("ohone number of the suspect is "+cursor.getString(0));
-
-
-
+                mLogger.info("ohone number of the suspect is " + cursor.getString(0));
+            }
 
        });
 
