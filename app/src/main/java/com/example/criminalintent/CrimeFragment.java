@@ -173,7 +173,12 @@ public class CrimeFragment extends Fragment {
 
                 cursor.moveToFirst();
 
-                mLogger.info("ohone number of the suspect is " + cursor.getString(0));
+                mLogger.info("phone number of the suspect is " + cursor.getString(0));
+
+                Intent callIntent=new Intent(Intent.ACTION_DIAL,Uri.parse(cursor.getString(0)));
+
+                startActivity(callIntent);
+
             }
 
        });
