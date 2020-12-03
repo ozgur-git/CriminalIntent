@@ -44,6 +44,8 @@ class CrimeList {
 
             c.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(Cols.SUSPECT)));
 
+            c.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(Cols.CONTACT_ID)));
+
             try {
 
                 String dateString=cursor.getString(cursor.getColumnIndex(Cols.DATE));
@@ -76,7 +78,7 @@ class CrimeList {
 
         Crime c=new Crime();
 
-        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"','"+c.getSuspect()+"')");
+        mDatabase.execSQL("insert into "+CrimeTable.NAME+" values('"+c.getId()+"','"+c.getTitle()+"','"+c.getDate()+"','"+c.isSolved()+"','"+c.getSuspect().getSuspectName()+"','"+c.getSuspect().getSuspectContactsID()+"')");
 
         mCrimes.add(c);
     }
@@ -88,7 +90,8 @@ class CrimeList {
                 " set "+Cols.TITLE+"='"+crime.getTitle()+"', "
                 +Cols.DATE+"='"+crime.getDate()+"', "
                 +Cols.SOLVED+"='"+crime.isSolved()+"',"
-                +Cols.SUSPECT+"='"+crime.getSuspect().getSuspectName()+"'"+
+                +Cols.SUSPECT+"='"+crime.getSuspect().getSuspectName()+"',"
+                +Cols.CONTACT_ID+"='"+crime.getSuspect().getSuspectContactsID()+"'"+
                 " where "+Cols.UUID+"='"+crime.getId()+"'";
 
         mLogger.info("sql is "+sql);

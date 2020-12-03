@@ -92,6 +92,8 @@ public class CrimeFragment extends Fragment {
         mDateButton=v.findViewById(R.id.crime_date);
         mTitleField=v.findViewById(R.id.crime_title);
         mReportButton=v.findViewById(R.id.crime_report);
+        mSuspectButton=v.findViewById(R.id.crime_suspect);
+        mCallSuspectButton=v.findViewById(R.id.call_suspect);
 
 
         mTitleField.setText(mCrime.getTitle());
@@ -142,10 +144,9 @@ public class CrimeFragment extends Fragment {
 
         Intent pickContact=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
 
-        mSuspectButton=v.findViewById(R.id.crime_suspect);
         mSuspectButton.setOnClickListener((view)-> startActivityForResult(pickContact,REQUEST_CONTACT));
 
-        if (mCrime.getSuspect() != null){
+        if (mCrime.getSuspect().getSuspectName() != null){
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
         }
@@ -153,33 +154,41 @@ public class CrimeFragment extends Fragment {
         if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null)
             mSuspectButton.setEnabled(false);
 
-        mCallSuspectButton=v.findViewById(R.id.call_suspect);
         mCallSuspectButton.setOnClickListener((view)->{
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_CONTACTS},1);
+
+            String contactID=mCrime.getSuspect().getSuspectContactsID();
+
+            if (contactID==null){
+
+
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_CONTACTS},1);
+                }
+
+                else {
+                    Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+
+                    String[] columns = {ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                    String where = ContactsContract.Data.CONTACT_ID + "=?";
+
+                    String[] selectionArgs = {(mCrime.getSuspect().getSuspectContactsID())};//todo String.valueof
+
+                    Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
+
+                    cursor.moveToFirst();
+
+                    mLogger.info("phone number of the suspect is " + cursor.getString(0));
+
+                    contactID=cursor.getString(0);
+
+                }
             }
 
-            else {
-                Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+            Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contactID));
 
-                String[] columns = {ContactsContract.CommonDataKinds.Phone.NUMBER};
-
-                String where = ContactsContract.Data.CONTACT_ID + "=?";
-
-                String[] selectionArgs = {((Integer) mCrime.getSuspect().getSuspectContactsID()).toString()};//todo String.valueof
-
-                Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
-
-                cursor.moveToFirst();
-
-                mLogger.info("phone number of the suspect is " + cursor.getString(0));
-
-                Intent callIntent=new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+cursor.getString(0)));
-
-                startActivity(callIntent);
-
-            }
+            startActivity(callIntent);
 
        });
 
@@ -209,7 +218,7 @@ public class CrimeFragment extends Fragment {
 
             mCrime.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
-            mCrime.getSuspect().setSuspectContactsID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))));
+            mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
 

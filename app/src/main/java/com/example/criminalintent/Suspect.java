@@ -3,8 +3,7 @@ package com.example.criminalintent;
 public class Suspect {
 
     private String suspectName;
-    private int suspectPhoneNumber;
-    private int suspectContactsID;
+    private String suspectContactsID;
 
     public String getSuspectName() {
         return suspectName;
@@ -14,19 +13,12 @@ public class Suspect {
         this.suspectName = suspectName;
     }
 
-    public int getSuspectPhoneNumber() {
-        return suspectPhoneNumber;
-    }
 
-    public void setSuspectPhoneNumber(int suspectPhoneNumber) {
-        this.suspectPhoneNumber = suspectPhoneNumber;
-    }
-
-    public int getSuspectContactsID() {
+    public String getSuspectContactsID() {
         return suspectContactsID;
     }
 
-    public void setSuspectContactsID(int suspectContactsID) {
+    public void setSuspectContactsID(String suspectContactsID) {
         this.suspectContactsID = suspectContactsID;
     }
 }
