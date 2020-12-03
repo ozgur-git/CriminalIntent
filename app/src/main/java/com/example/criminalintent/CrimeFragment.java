@@ -146,49 +146,44 @@ public class CrimeFragment extends Fragment {
 
         mSuspectButton.setOnClickListener((view)-> startActivityForResult(pickContact,REQUEST_CONTACT));
 
-        if (mCrime.getSuspect().getSuspectName() != null){
+//        if (mCrime.getSuspect().getSuspectName() != null){
+//
+//            mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
+//        }
 
-            mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
+        if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null) {
+
+            mSuspectButton.setEnabled(false);
         }
 
-        if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null)
-            mSuspectButton.setEnabled(false);
+        mCallSuspectButton.setEnabled(false);
 
         mCallSuspectButton.setOnClickListener((view)->{
 
-            String contactID=mCrime.getSuspect().getSuspectContactsID();
-
-            if (contactID==null){
-
-
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
-                {
-                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_CONTACTS},1);
-                }
-
-                else {
-                    Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-
-                    String[] columns = {ContactsContract.CommonDataKinds.Phone.NUMBER};
-
-                    String where = ContactsContract.Data.CONTACT_ID + "=?";
-
-                    String[] selectionArgs = {(mCrime.getSuspect().getSuspectContactsID())};//todo String.valueof
-
-                    Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
-
-                    cursor.moveToFirst();
-
-                    mLogger.info("phone number of the suspect is " + cursor.getString(0));
-
-                    contactID=cursor.getString(0);
-
-                }
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_CONTACTS},1);
             }
 
-            Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contactID));
+            else {
+                Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
-            startActivity(callIntent);
+                String[] columns = {ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                String where = ContactsContract.Data.CONTACT_ID + "=?";
+
+                String[] selectionArgs = {(mCrime.getSuspect().getSuspectContactsID())};//todo String.valueof
+
+                Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
+
+                cursor.moveToFirst();
+
+                mLogger.info("phone number of the suspect is " + cursor.getString(0));
+
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +cursor.getString(0)));
+
+                startActivity(callIntent);
+            }
 
        });
 
@@ -216,11 +211,15 @@ public class CrimeFragment extends Fragment {
 
             cursor.moveToFirst();
 
+            mLogger.info("contact id received from uri is "+cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
+
             mCrime.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
             mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
+
+            mCallSuspectButton.setEnabled(true);
 
         }
     }
