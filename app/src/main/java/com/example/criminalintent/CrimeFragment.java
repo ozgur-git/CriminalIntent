@@ -11,9 +11,7 @@ import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -49,6 +47,8 @@ public class CrimeFragment extends Fragment {
     private Button mReportButton;
     private Button mSuspectButton;
     private Button mCallSuspectButton;
+    private ImageButton mPhotoButton;
+    private ImageView mPhotoView;
 
     private CheckBox mSolvedCheckbox;
 
@@ -94,6 +94,8 @@ public class CrimeFragment extends Fragment {
         mReportButton=v.findViewById(R.id.crime_report);
         mSuspectButton=v.findViewById(R.id.crime_suspect);
         mCallSuspectButton=v.findViewById(R.id.call_suspect);
+        mPhotoButton=v.findViewById(R.id.crime_camera);
+        mPhotoView=v.findViewById(R.id.crime_photo);
 
 
         mTitleField.setText(mCrime.getTitle());
