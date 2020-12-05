@@ -126,7 +126,6 @@ public class CrimeListFragment extends Fragment {
 
         @Override
             public void onClick(View v) {
-           //todo update olmuyor
 
             mLogger.info("click position is "+getAbsoluteAdapterPosition());
 

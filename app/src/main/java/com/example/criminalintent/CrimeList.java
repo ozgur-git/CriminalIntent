@@ -7,6 +7,7 @@ import com.example.criminalintent.database.CrimeBaseHelper;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 class CrimeList {
+
+    Context context;
 
     Logger mLogger=Logger.getLogger(getClass().getName());
 
@@ -25,6 +28,8 @@ class CrimeList {
     SimpleDateFormat mSimpleDateFormat;
 
     CrimeList(Context context) {
+
+        this.context=context;
 
         mDatabase=new CrimeBaseHelper(context).getWritableDatabase();
 
@@ -109,6 +114,11 @@ class CrimeList {
         mDatabase.execSQL(sql);
 
         mCrimes.remove(index);
+    }
+
+    public File getPhotoFile(Crime crime){
+
+        return new File(context.getFilesDir(),crime.getPhotoFilename());
     }
 
 }

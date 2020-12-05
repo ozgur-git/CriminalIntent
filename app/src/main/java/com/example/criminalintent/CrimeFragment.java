@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -34,6 +35,8 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_DATE="dialog_date";
     public static final int REQUEST_DATE=0;
     private static final int REQUEST_CONTACT=1;
+
+    private File mPhotoFile;
 
     @Inject
     CrimeList mCrimeList;
@@ -76,6 +79,8 @@ public class CrimeFragment extends Fragment {
         crimeIndex= (int)getArguments().get(CRIME_ID_KEY);
 
         mCrime=mCrimeList.getCrimes().get(crimeIndex);
+
+        mPhotoFile=mCrimeList.getPhotoFile(mCrime);
 
 
 
@@ -174,7 +179,7 @@ public class CrimeFragment extends Fragment {
 
                 String where = ContactsContract.Data.CONTACT_ID + "=?";
 
-                String[] selectionArgs = {(mCrime.getSuspect().getSuspectContactsID())};//todo String.valueof
+                String[] selectionArgs = {(mCrime.getSuspect().getSuspectContactsID())};
 
                 Cursor cursor = getActivity().getContentResolver().query(uri, columns, where, selectionArgs, null);
 

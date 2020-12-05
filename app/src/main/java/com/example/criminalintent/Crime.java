@@ -23,7 +23,7 @@ public class Crime {
 
     public Crime() {
         mDate = new Date();
-        mSuspect=new Suspect();
+        mSuspect=new Suspect();//todo dependency injection
         mId=UUID.randomUUID();
     }
 
