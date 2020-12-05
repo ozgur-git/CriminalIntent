@@ -35,6 +35,7 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_DATE="dialog_date";
     public static final int REQUEST_DATE=0;
     private static final int REQUEST_CONTACT=1;
+    private static final int REQUEST_PHOTO=2;
 
     private File mPhotoFile;
 
@@ -81,8 +82,6 @@ public class CrimeFragment extends Fragment {
         mCrime=mCrimeList.getCrimes().get(crimeIndex);
 
         mPhotoFile=mCrimeList.getPhotoFile(mCrime);
-
-
 
     }
 
