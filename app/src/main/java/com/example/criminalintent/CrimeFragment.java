@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
@@ -17,12 +20,14 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.example.criminalintent.DatePickerFragment.DATE_EXTRA;
@@ -36,6 +41,7 @@ public class CrimeFragment extends Fragment {
     public static final int REQUEST_DATE=0;
     private static final int REQUEST_CONTACT=1;
     private static final int REQUEST_PHOTO=2;
+    private int crimeIndex;
 
     private File mPhotoFile;
 
@@ -53,10 +59,10 @@ public class CrimeFragment extends Fragment {
     private Button mCallSuspectButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
-
     private CheckBox mSolvedCheckbox;
 
-    private int crimeIndex;
+    Intent captureImage;
+
 
 
     public static CrimeFragment newInstance(int crimeIndex) {
@@ -100,8 +106,9 @@ public class CrimeFragment extends Fragment {
         mCallSuspectButton=v.findViewById(R.id.call_suspect);
         mPhotoButton=v.findViewById(R.id.crime_camera);
         mPhotoView=v.findViewById(R.id.crime_photo);
+        mPhotoView.setRotation(90);
 
-
+        updatePhotoView();
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
@@ -193,6 +200,27 @@ public class CrimeFragment extends Fragment {
 
        });
 
+        captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        boolean canTakePhoto=mPhotoFile!=null&&captureImage.resolveActivity(getActivity().getPackageManager())!=null;
+
+        mPhotoButton.setEnabled(canTakePhoto);
+
+        mPhotoButton.setOnClickListener((view)->{
+
+            Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
+
+            captureImage.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+
+            List<ResolveInfo> cameraActivities=getActivity().getPackageManager().queryIntentActivities(captureImage,PackageManager.MATCH_DEFAULT_ONLY);
+            for(ResolveInfo activity:cameraActivities){
+                getActivity().grantUriPermission(activity.activityInfo.packageName,uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+          }
+         startActivityForResult(captureImage,REQUEST_PHOTO);
+     });
+
         return v;
     }
 
@@ -228,6 +256,16 @@ public class CrimeFragment extends Fragment {
             mCallSuspectButton.setEnabled(true);
 
         }
+
+        else if (requestCode==REQUEST_PHOTO){
+
+            Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
+
+            getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            updatePhotoView();
+        }
+
     }
 
     @Override
@@ -286,6 +324,18 @@ public class CrimeFragment extends Fragment {
         return report;
 
     }
+
+    private void updatePhotoView(){
+
+        if (mPhotoFile==null||!mPhotoFile.exists()){
+            mPhotoView.setImageDrawable(null);
+        } else{
+
+            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
+            mPhotoView.setImageBitmap(bitmap);
+        }
+    }
+
     @Override
     public void onPause() {
         super.onPause();
