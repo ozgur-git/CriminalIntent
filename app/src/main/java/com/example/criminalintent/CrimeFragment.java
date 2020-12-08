@@ -199,7 +199,13 @@ public class CrimeFragment extends Fragment {
 
         });
 
-        mPhotoView.setOnClickListener((view)-> ZoomFragment.newInstance(mPhotoFile.getPath()));
+        mPhotoView.setOnClickListener((view)-> {
+
+            mLogger.info("photo view is clicked!");
+            ZoomFragment fragment=ZoomFragment.newInstance(mPhotoFile.getPath());
+            fragment.show(getFragmentManager(),"zoom");
+
+        });
 
 
 

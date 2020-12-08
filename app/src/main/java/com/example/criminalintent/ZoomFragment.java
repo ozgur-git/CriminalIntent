@@ -14,11 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.logging.Logger;
+
 public class ZoomFragment extends DialogFragment {
+
+    static  Logger mLogger=Logger.getLogger("abc");
 
     private final static String IMAGE_PATH = "path";
 
     public static ZoomFragment newInstance(String path) {
+
+        mLogger.info("zoom fragment new instance is called!");
 
         Bundle bundle=new Bundle();
 
@@ -35,9 +41,11 @@ public class ZoomFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        mLogger.info("zoom fragment oncreateview is called!");
+
         View view = inflater.inflate(R.layout.fragment_zoom, container, false);
 
-        String path=(String) savedInstanceState.getSerializable(IMAGE_PATH);
+        String path=(String) getArguments().getSerializable(IMAGE_PATH);
 
         ImageView imageView = view.findViewById(R.id.zoom_view);
 
