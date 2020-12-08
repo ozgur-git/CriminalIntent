@@ -37,7 +37,6 @@ public class CrimeFragment extends Fragment {
     Logger mLogger=Logger.getLogger("LOGGER_KEY");
 
     private static final String CRIME_ID_KEY="crime_id";
-    private static final String DIALOG_DATE="dialog_date";
     public static final int REQUEST_DATE=0;
     private static final int REQUEST_CONTACT=1;
     private static final int REQUEST_PHOTO=2;
@@ -198,7 +197,11 @@ public class CrimeFragment extends Fragment {
                 startActivity(callIntent);
             }
 
-       });
+        });
+
+        mPhotoView.setOnClickListener((view)-> ZoomFragment.newInstance(mPhotoFile.getPath()));
+
+
 
         captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -292,7 +295,7 @@ public class CrimeFragment extends Fragment {
 
     private String getCrimeReport(){
 
-        String solvedString=null;
+        String solvedString;
 
         if (mCrime.isSolved()){
 
@@ -319,9 +322,7 @@ public class CrimeFragment extends Fragment {
             suspect = getString(R.string.crime_report_suspect);
         }
 
-        String report=getString(R.string.crime_report,mCrime.getTitle(),dateString,solvedString,suspect);
-
-        return report;
+        return getString(R.string.crime_report,mCrime.getTitle(),dateString,solvedString,suspect);
 
     }
 
