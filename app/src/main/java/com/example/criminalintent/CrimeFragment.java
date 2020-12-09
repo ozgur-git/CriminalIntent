@@ -62,8 +62,6 @@ public class CrimeFragment extends Fragment {
 
     Intent captureImage;
 
-
-
     public static CrimeFragment newInstance(int crimeIndex) {
 
         Bundle args = new Bundle();
@@ -106,6 +104,14 @@ public class CrimeFragment extends Fragment {
         mPhotoButton=v.findViewById(R.id.crime_camera);
         mPhotoView=v.findViewById(R.id.crime_photo);
         mPhotoView.setRotation(90);
+
+        ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
+
+        observer.addOnGlobalLayoutListener(()-{
+
+          mPhotoView.;
+
+        });
 
         updatePhotoView();
         mTitleField.setText(mCrime.getTitle());
@@ -208,7 +214,6 @@ public class CrimeFragment extends Fragment {
         });
 
 
-
         captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         boolean canTakePhoto=mPhotoFile!=null&&captureImage.resolveActivity(getActivity().getPackageManager())!=null;
@@ -281,7 +286,6 @@ public class CrimeFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime,menu);
-
    }
 
     @Override
