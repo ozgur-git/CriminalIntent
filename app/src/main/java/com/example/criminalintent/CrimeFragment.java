@@ -62,6 +62,8 @@ public class CrimeFragment extends Fragment {
 
     Intent captureImage;
 
+    int photoViewHeight,photoViewWidth;
+
     public static CrimeFragment newInstance(int crimeIndex) {
 
         Bundle args = new Bundle();
@@ -105,15 +107,18 @@ public class CrimeFragment extends Fragment {
         mPhotoView=v.findViewById(R.id.crime_photo);
         mPhotoView.setRotation(90);
 
-        ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
-
-        observer.addOnGlobalLayoutListener(()-{
-
-          mPhotoView.;
-
-        });
-
+//        ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
+//
+//        observer.addOnGlobalLayoutListener(()->{
+//
+//            photoViewHeight=mPhotoView.getLayoutParams().height;
+//
+//            photoViewWidth=mPhotoView.getLayoutParams().width;
+//
+//            updatePhotoView();
+//        });
         updatePhotoView();
+
         mTitleField.setText(mCrime.getTitle());
         mDateButton.setText(mCrime.getDate());
         mDateButton.setEnabled(true);
@@ -340,11 +345,23 @@ public class CrimeFragment extends Fragment {
 
         if (mPhotoFile==null||!mPhotoFile.exists()){
             mPhotoView.setImageDrawable(null);
+            mLogger.info("onactivity result width and heigt is ");
+
         } else{
 
-            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
-            mPhotoView.setImageBitmap(bitmap);
+            ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(()->{
+                photoViewHeight=mPhotoView.getLayoutParams().height;
+                photoViewWidth=mPhotoView.getLayoutParams().width;
+            mLogger.info("onactivity result width and heigt is "+photoViewWidth+", "+photoViewHeight);
+                Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),photoViewWidth,photoViewHeight);
+                mPhotoView.setImageBitmap(bitmap);
+            });
+
+//            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
+
         }
+
     }
 
     @Override

@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
+import java.util.logging.Logger;
+
 public class PictureUtils {
+
+   static Logger mLogger=Logger.getLogger("pictureutils");
 
     public static Bitmap getScaledBitmap(String path,int destWidth,int destHeight){
 
@@ -32,13 +36,18 @@ public class PictureUtils {
 
        options.inSampleSize=inSampleSize;
 
-       return BitmapFactory.decodeFile(path,options);
+       Bitmap bitmap=BitmapFactory.decodeFile(path,options);
+
+       mLogger.info("PictureUtils destWidth and destHeight are "+destWidth+", "+destHeight);
+
+       return Bitmap.createScaledBitmap(bitmap,destWidth,destHeight,false);
 
     }
 
     public static Bitmap getScaledBitmap(String path, Activity activity){
 
         Point size=new Point();
+
 
         activity.getWindowManager().getDefaultDisplay().getSize(size);
 

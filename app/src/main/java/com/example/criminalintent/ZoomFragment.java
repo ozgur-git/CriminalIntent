@@ -49,6 +49,8 @@ public class ZoomFragment extends DialogFragment {
 
         ImageView imageView = view.findViewById(R.id.zoom_view);
 
+        imageView.setRotation(90);
+
         imageView.setImageBitmap(BitmapFactory.decodeFile(path));
 
 
