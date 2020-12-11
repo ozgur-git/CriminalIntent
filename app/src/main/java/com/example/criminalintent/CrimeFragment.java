@@ -132,31 +132,22 @@ public class CrimeFragment extends Fragment {
 
 
         mTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle(s.toString());
-
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+              mCrime.setTitle(s.toString());
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-
+          public void afterTextChanged(Editable s) {
             }
-        });
-
-        mReportButton.setOnClickListener((view)->{
-
-            Intent intent=ShareCompat.IntentBuilder.from(getActivity()).getIntent();
-
-            intent.setType("text/plain");
-
-            //Intent intent=new Intent(Intent.ACTION_SEND);
-            //intent.setType("text/plain");
+      });
+     mReportButton.setOnClickListener((view)->{
+         Intent intent=ShareCompat.IntentBuilder.from(getActivity()).getIntent();
+         intent.setType("text/plain");
+         //Intent intent=new Intent(Intent.ACTION_SEND);
+        //intent.setType("text/plain");
 
             intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
             intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
@@ -217,7 +208,6 @@ public class CrimeFragment extends Fragment {
             fragment.show(getFragmentManager(),"zoom");
 
         });
-
 
         captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -280,6 +270,7 @@ public class CrimeFragment extends Fragment {
 
             Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
 
+            mLogger.info("uri received from uri is "+ uri);
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             updatePhotoView();
@@ -343,22 +334,40 @@ public class CrimeFragment extends Fragment {
 
     private void updatePhotoView(){
 
+        mLogger.info("foto update is called");
+
+//        mPhotoView.setImageDrawable(null);
         if (mPhotoFile==null||!mPhotoFile.exists()){
             mPhotoView.setImageDrawable(null);
-            mLogger.info("onactivity result width and heigt is ");
+            mLogger.info("foto update is returning");
+            return;
 
         } else{
 
-            ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
-            observer.addOnGlobalLayoutListener(()->{
-                photoViewHeight=mPhotoView.getLayoutParams().height;
-                photoViewWidth=mPhotoView.getLayoutParams().width;
-            mLogger.info("onactivity result width and heigt is "+photoViewWidth+", "+photoViewHeight);
-                Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),photoViewWidth,photoViewHeight);
-                mPhotoView.setImageBitmap(bitmap);
-            });
+            mLogger.info("foto else is called ...");
 
-//            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
+            photoViewHeight = mPhotoView.getLayoutParams().height;
+            photoViewWidth = mPhotoView.getLayoutParams().width;
+
+
+            mLogger.info("foto height is ..."+mPhotoView.getLayoutParams().height);
+
+            //if (photoViewHeight==0&&photoViewWidth==0) {
+            //    ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
+            //    observer.addOnGlobalLayoutListener(() -> {
+            //        mLogger.info("foto layout listener ...");
+            //       mLogger.info("foto updating ..." + photoViewWidth + ", " + photoViewHeight);
+            //        Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
+            //        mPhotoView.setImageBitmap(bitmap);
+            //    });
+            //}
+            //else {
+
+                Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
+                mPhotoView.setImageBitmap(bitmap);
+            //}
+            mPhotoView.invalidate();
+             //            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
 
         }
 
