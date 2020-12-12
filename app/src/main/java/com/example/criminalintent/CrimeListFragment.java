@@ -65,7 +65,7 @@ public class CrimeListFragment extends Fragment {
 
         mRecyclerView=view.findViewById(R.id.crime_recycler_view);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
 
         mLogger.info("onCreateView is called!");
 
