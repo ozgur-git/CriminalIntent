@@ -45,7 +45,7 @@ public class CrimeFragment extends Fragment {
 
     private File mPhotoFile;
 
-    private Callbacks mCallbacks;
+    private FragmentCallbacks mCallbacks;
 
     @Inject
     CrimeList mCrimeList;
@@ -110,16 +110,6 @@ public class CrimeFragment extends Fragment {
         mPhotoView=v.findViewById(R.id.crime_photo);
         mPhotoView.setRotation(90);
 
-//        ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
-//
-//        observer.addOnGlobalLayoutListener(()->{
-//
-//            photoViewHeight=mPhotoView.getLayoutParams().height;
-//
-//            photoViewWidth=mPhotoView.getLayoutParams().width;
-//
-//            updatePhotoView();
-//        });
         updatePhotoView();
 
         mTitleField.setText(mCrime.getTitle());
@@ -129,23 +119,29 @@ public class CrimeFragment extends Fragment {
 
         mSolvedCheckbox.setChecked(mCrime.isSolved());
 
-        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked)->mCrime.setSolved(isChecked));
+        mSolvedCheckbox.setOnCheckedChangeListener((buttonView, isChecked)->{
+            mCrime.setSolved(isChecked);
+            updateCrime();
+        });
 
         PackageManager packageManager=getActivity().getPackageManager();
-
 
         mTitleField.addTextChangedListener(new TextWatcher() {
           @Override
           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
           public void onTextChanged(CharSequence s, int start, int before, int count) {
               mCrime.setTitle(s.toString());
+              updateCrime();
             }
+
             @Override
           public void afterTextChanged(Editable s) {
             }
       });
+
      mReportButton.setOnClickListener((view)->{
          Intent intent=ShareCompat.IntentBuilder.from(getActivity()).getIntent();
          intent.setType("text/plain");
@@ -242,6 +238,7 @@ public class CrimeFragment extends Fragment {
 
         if(requestCode==REQUEST_DATE&&resultCode== Activity.RESULT_OK) {
             mCrime.setDate((Date)data.getSerializableExtra(DATE_EXTRA));
+            updateCrime();
             mDateButton.setText(mCrime.getDate());
         }
 
@@ -263,6 +260,8 @@ public class CrimeFragment extends Fragment {
 
             mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
 
+            updateCrime();
+
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
 
             mCallSuspectButton.setEnabled(true);
@@ -274,11 +273,13 @@ public class CrimeFragment extends Fragment {
             Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
 
             mLogger.info("uri received from uri is "+ uri);
+
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            updateCrime();
 
             updatePhotoView();
         }
-
     }
 
     @Override
@@ -294,8 +295,10 @@ public class CrimeFragment extends Fragment {
 
             case R.id.delete_crime:
                                     mCrimeList.removeCrime(crimeIndex,mCrime.getId());//todo baska column gerekiyor
-                                    getActivity().finish();
-//                                    return true;
+                                    updateCrime();
+                                    getActivity().getSupportFragmentManager().popBackStack();
+//                                    getActivity().finish();
+                                    return true;
             default:
                                     return super.onOptionsItemSelected(item);
 
@@ -352,27 +355,18 @@ public class CrimeFragment extends Fragment {
             photoViewHeight = mPhotoView.getLayoutParams().height;
             photoViewWidth = mPhotoView.getLayoutParams().width;
 
-
             mLogger.info("foto height is ..."+mPhotoView.getLayoutParams().height);
 
-            //if (photoViewHeight==0&&photoViewWidth==0) {
-            //    ViewTreeObserver observer=mPhotoView.getViewTreeObserver();
-            //    observer.addOnGlobalLayoutListener(() -> {
-            //        mLogger.info("foto layout listener ...");
-            //       mLogger.info("foto updating ..." + photoViewWidth + ", " + photoViewHeight);
-            //        Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
-            //        mPhotoView.setImageBitmap(bitmap);
-            //    });
-            //}
-            //else {
-
-                Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
-                mPhotoView.setImageBitmap(bitmap);
-            //}
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
+            mPhotoView.setImageBitmap(bitmap);
             mPhotoView.invalidate();
-             //            Bitmap bitmap=PictureUtils.getScaledBitmap(mPhotoFile.getPath(),getActivity());
-
         }
+
+    }
+
+    private void updateCrime(){
+
+        mCallbacks.onCrimeUpdated(crimeIndex);
 
     }
 
@@ -385,7 +379,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mCallbacks=(Callbacks) context;
+        mCallbacks=(FragmentCallbacks) context;
     }
 
     @Override

@@ -174,9 +174,6 @@ public class CrimeListFragment extends Fragment {
 
             return new CrimeHolder(layoutInflater,parent);
 
-           // if (viewType==0) return new CrimeHolder(layoutInflater,parent);
-
-           // else return new CrimePoliceHolder(layoutInflater,parent);
         }
 
         @Override
@@ -192,11 +189,6 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
 
-       // @Override
-       // public int getItemViewType(int position) {
-       //     return (mCrimes.get(position).isRequiresPolice()?1:0);
-       // }
-
         @Override
         public long getItemId(int position) {
             return super.getItemId(position);
@@ -209,8 +201,7 @@ public class CrimeListFragment extends Fragment {
         mLogger.info("onResume is called!"+crimeItemPosition);
         if (crimeItemPosition!=null)
             mAdapter.notifyItemChanged(crimeItemPosition);
-//        mAdapter.notifyDataSetChanged();
-//        updateUI();
+
     }
 
     @Override
