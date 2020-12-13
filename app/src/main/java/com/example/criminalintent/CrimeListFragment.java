@@ -134,7 +134,9 @@ public class CrimeListFragment extends Fragment {
 
             crimeItemPosition=getAbsoluteAdapterPosition();
 
-            startActivity(CrimePagerActivity.newIntent(getActivity(),crimeItemPosition));
+            mCallbacks.onCrimeSelected(crimeItemPosition);
+
+//            startActivity(CrimePagerActivity.newIntent(getActivity(),crimeItemPosition));
         }
     }
 
@@ -240,7 +242,9 @@ public class CrimeListFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.new_crime:
                                  mCrimeList.addCrime();
-                                 startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
+                                 updateUI();
+                                 mCallbacks.onCrimeSelected(mCrimeList.getCrimes().size()-1);
+//                                 startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()+1));
                                  return true;
             case R.id.show_subtitle:
                                  mSubtitleVisible=!mSubtitleVisible;
@@ -264,4 +268,5 @@ public class CrimeListFragment extends Fragment {
         super.onDetach();
         mCallbacks=null;
     }
+
 }

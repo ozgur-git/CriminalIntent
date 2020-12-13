@@ -2,6 +2,7 @@ package com.example.criminalintent;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -43,6 +44,8 @@ public class CrimeFragment extends Fragment {
     private int crimeIndex;
 
     private File mPhotoFile;
+
+    private Callbacks mCallbacks;
 
     @Inject
     CrimeList mCrimeList;
@@ -377,7 +380,17 @@ public class CrimeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mCrimeList.updateCrime(mCrime);
-
     }
-    
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks=(Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks=null;
+    }
 }
