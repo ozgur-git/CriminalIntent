@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class CrimeListFragment extends Fragment {
+
+    private Callbacks mCallbacks;
 
     @Inject
     CrimeList mCrimeList;
@@ -82,7 +85,7 @@ public class CrimeListFragment extends Fragment {
         mLogger.info("received visibility is "+mSubtitleVisible);
     }
 
-    private void updateUI(){
+    void updateUI(){
 
        mAdapter=new CrimeAdapter(mCrimeList.getCrimes());
 
@@ -248,5 +251,17 @@ public class CrimeListFragment extends Fragment {
                                  return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks=(Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks=null;
     }
 }
