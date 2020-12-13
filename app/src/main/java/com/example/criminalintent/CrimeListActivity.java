@@ -36,5 +36,7 @@ public class CrimeListActivity extends SingleFragmentActivity implements Callbac
     @Override
     public void onCrimeUpdated(int crimeIndex) {
 
+        ((CrimeListFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container)).updateUI();
+
     }
 }

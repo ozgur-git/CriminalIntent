@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements FragmentCallbacks{
 
     Logger mLogger= Logger.getLogger(getClass().getName());
 
@@ -85,6 +85,10 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         mLogger.info("crime pager actvivity intent is "+getIntent().getIntExtra(EXTRA_CRIME_ID,0));
         mViewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_CRIME_ID,0));
+    }
+
+    @Override
+    public void onCrimeUpdated(int crimeIndex) {
 
     }
 }
