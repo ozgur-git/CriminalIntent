@@ -1,8 +1,9 @@
 package com.example.criminalintent;
 
+import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
-public class CrimeListActivity extends SingleFragmentActivity implements CrimeListFragment.Callbacks{
+public class CrimeListActivity extends SingleFragmentActivity implements Callbacks{
 
     @Override
     protected Fragment createFragment() {
@@ -10,11 +11,19 @@ public class CrimeListActivity extends SingleFragmentActivity implements CrimeLi
     }
 
     @Override
-    public void onCrimeUpdated(Crime crime) {
+    public void onCrimeUpdated(int crimeIndex) {
 
-        CrimeListFragment listFragment=(CrimeListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+       if (findViewById(R.id.detail_fragment_container)==null){
 
-        listFragment.updateUI();
+           Intent intent=CrimePagerActivity.newIntent(this,crimeIndex);
+           startActivity(intent);
+       }
+
+       else {
+
+
+
+       }
 
     }
 }
