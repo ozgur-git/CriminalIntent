@@ -102,7 +102,6 @@ public class CrimePagerActivity extends AppCompatActivity implements FragmentCal
 
         finish();
 
-
     }
 
 }

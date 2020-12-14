@@ -96,6 +96,10 @@ public class CrimeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
+
+      mLogger.info("Crime Fragment oncreateview is called!");
+
+
        View v=View.inflate(getContext(),R.layout.fragment_crime,null);
 
        setHasOptionsMenu(true);
@@ -145,24 +149,16 @@ public class CrimeFragment extends Fragment {
      mReportButton.setOnClickListener((view)->{
          Intent intent=ShareCompat.IntentBuilder.from(getActivity()).getIntent();
          intent.setType("text/plain");
-         //Intent intent=new Intent(Intent.ACTION_SEND);
-        //intent.setType("text/plain");
-
-            intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
-            intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
-            intent=Intent.createChooser(intent,getString(R.string.send_report));
-            startActivity(intent);
+         intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
+         intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
+         intent=Intent.createChooser(intent,getString(R.string.send_report));
+         startActivity(intent);
 
         });
 
         Intent pickContact=new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
 
         mSuspectButton.setOnClickListener((view)-> startActivityForResult(pickContact,REQUEST_CONTACT));
-
-//        if (mCrime.getSuspect().getSuspectName() != null){
-//
-//            mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
-//        }
 
         if (packageManager.resolveActivity(pickContact,PackageManager.MATCH_DEFAULT_ONLY)==null) {
 
