@@ -34,6 +34,12 @@ public class CrimeListActivity extends SingleFragmentActivity implements Callbac
     }
 
     @Override
+    public void onCrimeDeleted(CrimeFragment crimeFragment) {
+
+       crimeFragment.deleteFragment();
+    }
+
+    @Override
     public void onCrimeUpdated(int crimeIndex) {
 
         ((CrimeListFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container)).updateUI();

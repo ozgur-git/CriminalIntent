@@ -288,6 +288,11 @@ public class CrimeFragment extends Fragment {
         inflater.inflate(R.menu.fragment_crime,menu);
    }
 
+   void deleteFragment(){
+
+     getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitNow();
+
+   }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -296,7 +301,11 @@ public class CrimeFragment extends Fragment {
             case R.id.delete_crime:
                                     mCrimeList.removeCrime(crimeIndex,mCrime.getId());//todo baska column gerekiyor
                                     updateCrime();
-                                    getActivity().getSupportFragmentManager().popBackStack();
+                                    mCallbacks.onCrimeDeleted(this);
+//                                    getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitNow();
+
+//                                    mCallbacks.onCrimeUpdated(crimeIndex);
+//                                    getActivity().getSupportFragmentManager().popBackStack();
 //                                    getActivity().finish();
                                     return true;
             default:
@@ -373,6 +382,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         mCrimeList.updateCrime(mCrime);
     }
 

@@ -74,7 +74,10 @@ public class CrimePagerActivity extends AppCompatActivity implements FragmentCal
 
             @Override
             public int getItemPosition(@NonNull Object object) {
-                return super.getItemPosition(object);
+
+//                return super.getItemPosition(object);
+                return POSITION_NONE;
+
             }
 
             @Override
@@ -83,12 +86,23 @@ public class CrimePagerActivity extends AppCompatActivity implements FragmentCal
             }
         });
 
+
         mLogger.info("crime pager actvivity intent is "+getIntent().getIntExtra(EXTRA_CRIME_ID,0));
         mViewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_CRIME_ID,0));
+
     }
 
     @Override
     public void onCrimeUpdated(int crimeIndex) {
 
     }
+
+    @Override
+    public void onCrimeDeleted(CrimeFragment crimeFragment) {
+
+        finish();
+
+
+    }
+
 }
