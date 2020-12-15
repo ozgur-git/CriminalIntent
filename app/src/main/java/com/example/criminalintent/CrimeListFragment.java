@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 public class CrimeListFragment extends Fragment {
 
     private Callbacks mCallbacks;
+    private FragmentCallbacks mFragmentCallbacks;
 
     @Inject
     CrimeList mCrimeList;
@@ -71,7 +72,7 @@ public class CrimeListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
 
-        ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback() {
+        ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -79,6 +80,13 @@ public class CrimeListFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                mLogger.info("onSwipe is called at "+viewHolder.getAbsoluteAdapterPosition());
+                viewHolder.
+                mCrimeList.removeCrime(viewHolder.getAbsoluteAdapterPosition(),mCrimeList.getCrimes().get(viewHolder.getAbsoluteAdapterPosition()).getId());//todo baska column gerekiyor
+                mFragmentCallbacks.onCrimeDeleted();
+                updateUI();
+
 
             }
         };
