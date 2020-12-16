@@ -72,7 +72,7 @@ public class CrimeListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
 
-        ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+        ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -82,11 +82,9 @@ public class CrimeListFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 mLogger.info("onSwipe is called at "+viewHolder.getAbsoluteAdapterPosition());
-                viewHolder.
                 mCrimeList.removeCrime(viewHolder.getAbsoluteAdapterPosition(),mCrimeList.getCrimes().get(viewHolder.getAbsoluteAdapterPosition()).getId());//todo baska column gerekiyor
-                mFragmentCallbacks.onCrimeDeleted();
+                mFragmentCallbacks.onCrimeDeleted(null);
                 updateUI();
-
 
             }
         };
@@ -275,6 +273,8 @@ public class CrimeListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mCallbacks=(Callbacks) context;
+        mFragmentCallbacks=(FragmentCallbacks) context;
+
     }
 
     @Override
