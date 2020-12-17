@@ -38,7 +38,17 @@ public class CrimeListActivity extends SingleFragmentActivity implements Callbac
 
         if (crimeFragment==null){
 
-            ((CrimeFragment)getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container)).deleteFragment();
+            CrimeFragment tablet=(CrimeFragment)getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
+
+//            CrimeFragment phone=(CrimeFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+            if ((tablet != null)) {
+                tablet.deleteFragment();
+//            } else {
+//                phone.deleteFragment();
+            }
+
+//            ((CrimeFragment)getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container)).deleteFragment();
 
         }
 
