@@ -1,7 +1,11 @@
 package com.example.criminalintent;
 
+import androidx.annotation.LayoutRes;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Crime {
@@ -53,10 +57,15 @@ public class Crime {
 
     public String getDate() {
 
-        SimpleDateFormat dateFormat=new SimpleDateFormat("E. MMM dd, yyyy");
+//        android.icu.text.DateFormat.
+
+        DateFormat dateFormat=DateFormat.getDateInstance(DateFormat.MEDIUM);
+
+//        SimpleDateFormat dateFormat=new SimpleDateFormat("E. MMM dd, yyyy");
+
+//        return dateFormat.format(mDate);
 
         return dateFormat.format(mDate);
-
     }
 
     public Date getCrimeDate(){

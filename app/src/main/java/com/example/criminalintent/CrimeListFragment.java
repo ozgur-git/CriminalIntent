@@ -219,6 +219,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
         mLogger.info("onResume is called!"+crimeItemPosition);
         if (crimeItemPosition!=null)
             mAdapter.notifyItemChanged(crimeItemPosition);
