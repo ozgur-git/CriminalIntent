@@ -1,6 +1,7 @@
 package com.example.criminalintent;
 
 import android.Manifest;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -355,6 +356,10 @@ public class CrimeFragment extends Fragment {
             mPhotoView.setImageBitmap(bitmap);
             mPhotoView.setContentDescription(getString(R.string.crime_photo_image_description));
             mPhotoView.invalidate();
+
+            mPhotoView.postDelayed(()->mPhotoView.announceForAccessibility("photo of the crime has been shooted by the camera"),3000);
+
+            mPhotoView.announceForAccessibility("");
         }
 
     }
