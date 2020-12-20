@@ -144,6 +144,11 @@ public class CrimeListFragment extends Fragment {
             mDateTextView.setText(mCrime.getDate());
             mTitleTextView.setText(mCrime.getTitle());
             mImageSolveView.setVisibility(mCrime.isSolved()?View.VISIBLE:View.INVISIBLE);
+
+//            mImageSolveView.setContentDescription(mCrime.isSolved()?getString(R.string.crime_solved_image_description):getString(R.string.crime_not_solved_image_description));
+            mImageSolveView.setContentDescription(getString(R.string.crime_solved_image_description));
+            mDateTextView.setContentDescription("date of the crime is "+mCrime.getDate());
+            mTitleTextView.setContentDescription("title of the crime is "+mCrime.getTitle());
         }
 
         @Override

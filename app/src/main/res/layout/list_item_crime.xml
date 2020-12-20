@@ -26,7 +26,7 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_solved"
-            android:id="@+id/imageView" android:contentDescription="TODO"
+            android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>

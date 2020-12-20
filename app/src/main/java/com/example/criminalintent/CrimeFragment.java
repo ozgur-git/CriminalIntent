@@ -97,9 +97,6 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable  Bundle savedInstanceState) {
 
-      mLogger.info("Crime Fragment oncreateview is called!");
-
-
        View v=View.inflate(getContext(),R.layout.fragment_crime,null);
 
        setHasOptionsMenu(true);
@@ -117,7 +114,9 @@ public class CrimeFragment extends Fragment {
         updatePhotoView();
 
         mTitleField.setText(mCrime.getTitle());
+
         mDateButton.setText(mCrime.getDate());
+        mDateButton.setContentDescription("Crime date is "+mCrime.getDate()+" please click here to choose another date");
         mDateButton.setEnabled(true);
         mDateButton.setOnClickListener((view)-> startActivityForResult(DatePickerFragmentActivity.newIntent(getActivity(),mCrime.getCrimeDate()),0));
 
@@ -256,7 +255,11 @@ public class CrimeFragment extends Fragment {
 
             mSuspectButton.setText(mCrime.getSuspect().getSuspectName());
 
+            mSuspectButton.setContentDescription(mCrime.getSuspect().getSuspectName()+" is selected as suspect");
+
             mCallSuspectButton.setEnabled(true);
+
+            mCallSuspectButton.setContentDescription("The suspect "+mCrime.getSuspect().getSuspectName()+" will be called");
 
         }
 
