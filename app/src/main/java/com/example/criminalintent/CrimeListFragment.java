@@ -58,8 +58,6 @@ public class CrimeListFragment extends Fragment {
 
             placeholderButton.setOnClickListener((v)->{
                 mCrimeList.addCrime();
-                mLogger.info("size of the array is "+mCrimeList.getCrimes().size());
-                mLogger.info("size of the array issecond "+mCrimeList.getCrimes().size());
                 startActivity(CrimePagerActivity.newIntent(getActivity().getBaseContext(),mCrimeList.getCrimes().size()));
             });
         }
@@ -184,7 +182,6 @@ public class CrimeListFragment extends Fragment {
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
 
-            mLogger.info("adapter cons is called!");
         }
 
         @NonNull

@@ -43,7 +43,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         float dpHeight = outMetrics.heightPixels ;
         float dpWidth  = outMetrics.widthPixels / density;
 
-        mLogger.info("height is "+dpHeight+" width is "+dpWidth);
+        mLogger.info("density is "+density+" height is "+dpHeight+" width is "+dpWidth);
 
     }
 }

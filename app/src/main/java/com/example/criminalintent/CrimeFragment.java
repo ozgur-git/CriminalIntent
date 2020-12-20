@@ -187,8 +187,6 @@ public class CrimeFragment extends Fragment {
 
                 cursor.moveToFirst();
 
-                mLogger.info("phone number of the suspect is " + cursor.getString(0));
-
                 Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +cursor.getString(0)));
 
                 startActivity(callIntent);
@@ -250,8 +248,6 @@ public class CrimeFragment extends Fragment {
 
             cursor.moveToFirst();
 
-            mLogger.info("contact id received from uri is "+cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
-
             mCrime.getSuspect().setSuspectName(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
             mCrime.getSuspect().setSuspectContactsID(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
@@ -267,8 +263,6 @@ public class CrimeFragment extends Fragment {
         else if (requestCode==REQUEST_PHOTO){
 
             Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
-
-            mLogger.info("uri received from uri is "+ uri);
 
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
@@ -345,25 +339,18 @@ public class CrimeFragment extends Fragment {
 
     private void updatePhotoView(){
 
-        mLogger.info("foto update is called");
-
-//        mPhotoView.setImageDrawable(null);
         if (mPhotoFile==null||!mPhotoFile.exists()){
             mPhotoView.setImageDrawable(null);
-            mLogger.info("foto update is returning");
+            mPhotoView.setContentDescription(getString(R.string.crime_photo_no_image_description));
             return;
 
         } else{
 
-            mLogger.info("foto else is called ...");
-
             photoViewHeight = mPhotoView.getLayoutParams().height;
             photoViewWidth = mPhotoView.getLayoutParams().width;
-
-            mLogger.info("foto height is ..."+mPhotoView.getLayoutParams().height);
-
             Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), photoViewWidth, photoViewHeight);
             mPhotoView.setImageBitmap(bitmap);
+            mPhotoView.setContentDescription(getString(R.string.crime_photo_image_description));
             mPhotoView.invalidate();
         }
 
