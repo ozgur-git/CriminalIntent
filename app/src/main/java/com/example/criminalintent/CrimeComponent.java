@@ -10,7 +10,7 @@ public interface CrimeComponent {
 
     void inject(CrimeListFragment crimeListFragment);
     void inject(CrimePagerActivity crimePagerActivity);
-    void inject(CrimeFragment crimeragment);
+    void inject(CrimeFragment crimeFragment);
     void inject(CrimeList crimeList);
 //    void inject();
 
