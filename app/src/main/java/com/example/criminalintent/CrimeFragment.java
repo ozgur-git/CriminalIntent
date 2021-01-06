@@ -150,7 +150,7 @@ public class CrimeFragment extends Fragment {
          Intent intent=ShareCompat.IntentBuilder.from(getActivity()).getIntent();
          intent.setType("text/plain");
          intent.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
-         intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
+         intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_subject));
          intent=Intent.createChooser(intent,getString(R.string.send_report));
          startActivity(intent);
 
@@ -187,30 +187,30 @@ public class CrimeFragment extends Fragment {
 
                 cursor.moveToFirst();
 
-                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +cursor.getString(0)));
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +cursor.getString(0)));
 
-                startActivity(callIntent);
-            }
+                    startActivity(callIntent);
+                }
 
-        });
+            });
 
-        mPhotoView.setOnClickListener((view)-> {
+            mPhotoView.setOnClickListener((view)-> {
 
-            mLogger.info("photo view is clicked!");
-            ZoomFragment fragment=ZoomFragment.newInstance(mPhotoFile.getPath());
-            fragment.show(getFragmentManager(),"zoom");
+                mLogger.info("photo view is clicked!");
+                ZoomFragment fragment=ZoomFragment.newInstance(mPhotoFile.getPath());
+                fragment.show(getFragmentManager(),"zoom");
 
-        });
+            });
 
-        captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureImage=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        boolean canTakePhoto=mPhotoFile!=null&&captureImage.resolveActivity(getActivity().getPackageManager())!=null;
+            boolean canTakePhoto=mPhotoFile!=null&&captureImage.resolveActivity(getActivity().getPackageManager())!=null;
 
-        mPhotoButton.setEnabled(canTakePhoto);
+            mPhotoButton.setEnabled(canTakePhoto);
 
-        mPhotoButton.setOnClickListener((view)->{
+            mPhotoButton.setOnClickListener((view)->{
 
-            Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
+                Uri uri= FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.myprovider",mPhotoFile);
 
             captureImage.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -334,7 +334,7 @@ public class CrimeFragment extends Fragment {
         }
 
         else {
-            suspect = getString(R.string.crime_report_suspect);
+            suspect = getString(R.string.crime_report_suspect,suspect);
         }
 
         return getString(R.string.crime_report,mCrime.getTitle(),dateString,solvedString,suspect);
